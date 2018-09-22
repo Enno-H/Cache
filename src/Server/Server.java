@@ -12,30 +12,52 @@ public class Server {
     private Logger log = Logger.getLogger(Server.class.getName());
 
     public static void main(String[] args) {
-        try {
             Server server = new Server();
             server.loadFiles();
+            server.runServer(8080);
+    }
 
 
-            ServerSocket ss = new ServerSocket(8080);
-            System.out.println("启动服务器....");
-            Socket s = ss.accept();
-            System.out.println("客户端:"+s.getInetAddress().getLocalHost()+"已连接到服务器");
-            BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
-            //读取客户端发送来的消息
-            String mess = br.readLine();
-            System.out.println("客户端："+mess);
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
-            bw.write(mess+"\n");
-            bw.flush();
+    private void runServer(int port){
+        try {
+            ServerSocket serverSocket = new ServerSocket(port);
+            System.out.println("启动服务器，端口："+ port + "...");
+
+
+            while (true){
+                Socket socket = serverSocket.accept();
+                System.out.println("客户端:"+socket.getInetAddress().getLocalHost()+"已连接到服务器");
+
+                DataInputStream input = new DataInputStream(socket.getInputStream());
+                OutputStream outputStream = socket.getOutputStream();
+                String commandFromClient = input.readUTF();
+                log.info("received command : [" + commandFromClient + "]");
+
+                //判断命令
+                if (commandFromClient.equals("list")) {
+                    list(outputStream);
+
+                } else {
+                    transfer(outputStream, commandFromClient);
+                }
+
+
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    private void list(OutputStream outputStream){
+        System.out.println("list request received");
+    }
 
-    private  void loadFiles() {
+    private void transfer(OutputStream outputStream, String fileName){
+        System.out.println("transfer request received");
+    }
 
+
+    private void loadFiles() {
         File folder = new File("files");
         log.info("path:" + folder.getAbsolutePath());
         File[] listOfFiles = folder.listFiles();
