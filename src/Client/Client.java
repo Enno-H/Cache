@@ -25,7 +25,11 @@ public class Client {
 
         Client client = new Client();
         try {
-            client.listFiles();
+            //client.listFiles();
+
+            client.requestFile("1.txt");
+
+
         } catch (UnknownHostException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -70,7 +74,7 @@ public class Client {
         Socket clientSocket = new Socket("localhost",8080);
         DataOutputStream dos = new DataOutputStream(clientSocket.getOutputStream());
         DataInputStream dis = new DataInputStream(clientSocket.getInputStream());
-        FileInputStream fis = new FileInputStream(fileName);
+        FileOutputStream fos = new FileOutputStream(fileName);
         try {
             dos.writeUTF(fileName);
 
@@ -79,7 +83,7 @@ public class Client {
             long fileLength = dis.readLong();
 
 
-            byte[] buffer = new byte[2048];
+            byte[] buffer = new byte[5000];
             int read = 0;
 
 
@@ -89,8 +93,8 @@ public class Client {
             int length = 0;
             long progress = 0;
             while((length = dis.read(bytes, 0, bytes.length)) != -1) {
-                dos.write(bytes, 0, length);
-                dos.flush();
+                fos.write(bytes, 0, length);
+                fos.flush();
                 progress += length;
                 System.out.print("| " + (100*progress/fileLength) + "% |");
             }

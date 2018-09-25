@@ -94,6 +94,7 @@ public class Server {
 
                 } else {
                     //TODO 下载文件
+                    sendFile(os, commandFromClient);
                 }
 
 
@@ -136,7 +137,7 @@ public class Server {
 
                 // 开始传输文件
                 System.out.println("======== 开始传输文件 ========");
-                byte[] bytes = new byte[1024];
+                byte[] bytes = new byte[5000];
                 int length = 0;
                 long progress = 0;
                 while((length = fis.read(bytes, 0, bytes.length)) != -1) {
