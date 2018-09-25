@@ -5,6 +5,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Logger;
 
 public class Server {
@@ -159,6 +161,12 @@ public class Server {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void listFile(OutputStream outputStream) throws IOException{
+        log.info("client requests file list");
+        ObjectOutputStream oos = new ObjectOutputStream(outputStream);
+        oos.writeObject(fileList.keySet());
     }
 
 
