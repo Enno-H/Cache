@@ -31,53 +31,22 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-        /**
-        try {
-            Socket s = new Socket("127.0.0.1",8080);
-
-            //构建IO
-            InputStream is = s.getInputStream();
-            OutputStream os = s.getOutputStream();
-
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os));
-            //向服务器端发送一条消息
-            bw.write("测试客户端和服务器通信，服务器接收到消息返回到客户端\n");
-            bw.flush();
-
-            //读取服务器返回的消息
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            String mess = br.readLine();
-            System.out.println("服务器："+mess);
-
-
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-         **/
-
-
     }
 
     private void listFiles() throws UnknownHostException, IOException{
 
         this.serverFileList = new ArrayList<String>();
-
-
         Socket clientSocket = new Socket("127.0.0.1",8080);
         DataOutputStream dos = new DataOutputStream(clientSocket.getOutputStream());
-        dos.writeUTF(LIST_FILES_COMMAND);
-        ObjectInputStream inputFromServer = new ObjectInputStream(clientSocket.getInputStream());
-        System.out.print("Sending string: '" + LIST_FILES_COMMAND + "'\n");
+        dos.writeUTF("list files");
+        ObjectInputStream ois = new ObjectInputStream(clientSocket.getInputStream());
+        System.out.print("Sending string: listFile");
         try {
 
-            Set<String> fileList = null;
+            Set<String> files = null;
             this.getServerFileList().clear();
-            fileList = (Set<String>) inputFromServer.readObject();
-            for (String fileName : fileList) {
+            files = (Set<String>) ois.readObject();
+            for (String fileName : files) {
                 log.info(fileName);
                 this.getServerFileList().add(fileName);
             }
@@ -91,9 +60,52 @@ public class Client {
             e.printStackTrace();
         } finally {
             dos.close();
-            inputFromServer.close();
+            ois.close();
             clientSocket.close();
         }
+    }
+
+    private void requestFile(String fileName) throws UnknownHostException, IOException{
+
+        Socket clientSocket = new Socket("localhost",8080);
+        DataOutputStream dos = new DataOutputStream(clientSocket.getOutputStream());
+        DataInputStream dis = new DataInputStream(clientSocket.getInputStream());
+        FileInputStream fis = new FileInputStream(fileName);
+        try {
+            dos.writeUTF(fileName);
+
+
+            String Name = dis.readUTF();
+            long fileLength = dis.readLong();
+
+
+            byte[] buffer = new byte[2048];
+            int read = 0;
+
+
+            // 开始接收文件
+            System.out.println("======== 开始接收文件 ========");
+            byte[] bytes = new byte[1024];
+            int length = 0;
+            long progress = 0;
+            while((length = dis.read(bytes, 0, bytes.length)) != -1) {
+                dos.write(bytes, 0, length);
+                dos.flush();
+                progress += length;
+                System.out.print("| " + (100*progress/fileLength) + "% |");
+            }
+            System.out.println();
+            System.out.println("======== 文件传输成功 ========");
+
+
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+
+
+
     }
 
     public List<String> getServerFileList() {
