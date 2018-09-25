@@ -9,6 +9,9 @@ import java.net.UnknownHostException;
 public class Client {
 
     public static void main(String[] args) {
+        Client client = new Client();
+
+
         try {
 
             Socket s = new Socket("127.0.0.1",8080);
@@ -31,6 +34,11 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void listFiles() throws UnknownHostException, IOException{
+        Socket clientSocket = new Socket("127.0.0.1",8080);
+
     }
 
 
