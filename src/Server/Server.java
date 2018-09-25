@@ -35,7 +35,7 @@ public class Server {
 
 
 
-
+                /**
                 DataInputStream input = new DataInputStream(socket.getInputStream());
                 OutputStream outputStream = socket.getOutputStream();
 
@@ -51,6 +51,7 @@ public class Server {
                 } else {
                     transfer(outputStream, commandFromClient);
                 }
+                 **/
 
 
             }
@@ -87,8 +88,9 @@ public class Server {
 
 
                 //判断命令
-                if (commandFromClient.equals("list")) {
+                if (commandFromClient.equals("list files")) {
                     //TODO 展示可用文件
+                    listFile(os);
 
                 } else {
                     //TODO 下载文件
@@ -118,18 +120,6 @@ public class Server {
             }
         }
     }
-
-
-
-
-    private void list(OutputStream outputStream){
-        System.out.println("list request received");
-    }
-
-    private void transfer(OutputStream outputStream, String fileName){
-        System.out.println("transfer request received");
-    }
-
 
     private void sendFile(OutputStream outputStream, String fileName) throws Exception {
         try {
@@ -166,9 +156,9 @@ public class Server {
     private void listFile(OutputStream outputStream) throws IOException{
         log.info("client requests file list");
         ObjectOutputStream oos = new ObjectOutputStream(outputStream);
-        oos.writeObject(fileList.keySet());
+        Set<String> files = new HashSet<String>(fileList.keySet());
+        oos.writeObject(files);
     }
-
 
     private void loadFiles() {
         File folder = new File("files");
