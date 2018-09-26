@@ -32,28 +32,6 @@ public class Server {
                 Socket socket = serverSocket.accept();
                 System.out.println("客户端:"+socket.getInetAddress().getLocalHost()+"已连接到服务器");
                 new Thread(new Task(socket)).start();
-
-
-
-                /**
-                DataInputStream input = new DataInputStream(socket.getInputStream());
-                OutputStream outputStream = socket.getOutputStream();
-
-
-                //debug
-                String commandFromClient = input.readUTF();
-                log.info("received command : [" + commandFromClient + "]");
-
-                //判断命令
-                if (commandFromClient.equals("list")) {
-                    list(outputStream);
-
-                } else {
-                    transfer(outputStream, commandFromClient);
-                }
-                 **/
-
-
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -96,11 +74,6 @@ public class Server {
                     //TODO 下载文件
                     sendFile(os, commandFromClient);
                 }
-
-
-
-
-
 
             } catch (SocketTimeoutException s) {
                 log.info("Socket timed out!");

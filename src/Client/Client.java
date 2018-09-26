@@ -25,7 +25,7 @@ public class Client {
 
         Client client = new Client();
         try {
-            //client.listFiles();
+            client.listFiles();
 
             client.requestFile("1.txt");
 
