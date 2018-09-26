@@ -14,18 +14,21 @@ public class Server {
     private HashMap<String, File> fileList = new HashMap<>();
     private Logger log = Logger.getLogger(Server.class.getName());
 
+    private static final int SERVER_PORT = 8080;
+    private static final int CACHE_PORT = 8081;
+
 
     public static void main(String[] args) {
             Server server = new Server();
             server.loadFiles();
-            server.runServer(8080);
+            server.runServer();
     }
 
 
-    private void runServer(int port){
+    private void runServer(){
         try {
-            ServerSocket serverSocket = new ServerSocket(port);
-            System.out.println("启动服务器，端口："+ port + "...");
+            ServerSocket serverSocket = new ServerSocket(SERVER_PORT);
+            System.out.println("启动服务器，端口："+ SERVER_PORT + "...");
 
 
             while (true){
@@ -67,11 +70,9 @@ public class Server {
 
                 //判断命令
                 if (commandFromClient.equals("list files")) {
-                    //TODO 展示可用文件
                     listFile(os);
 
                 } else {
-                    //TODO 下载文件
                     sendFile(os, commandFromClient);
                 }
 
@@ -93,46 +94,49 @@ public class Server {
                 }
             }
         }
-    }
 
-    private void sendFile(OutputStream outputStream, String fileName) throws Exception {
-        try {
-            File file = fileList.get(fileName);
-            if(file.exists()) {
-                FileInputStream fis = new FileInputStream(file);
-                DataOutputStream dos = new DataOutputStream(outputStream);
+        private void sendFile(OutputStream outputStream, String fileName) throws Exception {
+            try {
+                File file = fileList.get(fileName);
+                if(file.exists()) {
+                    FileInputStream fis = new FileInputStream(file);
+                    DataOutputStream dos = new DataOutputStream(outputStream);
 
-                // 文件名和长度
-                dos.writeUTF(file.getName());
-                dos.flush();
-                dos.writeLong(file.length());
-                dos.flush();
-
-                // 开始传输文件
-                System.out.println("======== 开始传输文件 ========");
-                byte[] bytes = new byte[5000];
-                int length = 0;
-                long progress = 0;
-                while((length = fis.read(bytes, 0, bytes.length)) != -1) {
-                    dos.write(bytes, 0, length);
+                    // 文件名和长度
+                    dos.writeUTF(file.getName());
                     dos.flush();
-                    progress += length;
-                    System.out.print("| " + (100*progress/file.length()) + "% |");
+                    dos.writeLong(file.length());
+                    dos.flush();
+
+                    // 开始传输文件
+                    System.out.println("======== 开始传输文件 ========");
+                    byte[] bytes = new byte[5000];
+                    int length = 0;
+                    long progress = 0;
+                    while((length = fis.read(bytes, 0, bytes.length)) != -1) {
+                        dos.write(bytes, 0, length);
+                        dos.flush();
+                        progress += length;
+                        System.out.print("| " + (100*progress/file.length()) + "% |");
+                    }
+                    System.out.println();
+                    System.out.println("======== 文件传输成功 ========");
                 }
-                System.out.println();
-                System.out.println("======== 文件传输成功 ========");
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+
+        private void listFile(OutputStream outputStream) throws IOException{
+            log.info("client requests file list");
+            ObjectOutputStream oos = new ObjectOutputStream(outputStream);
+            Set<String> files = new HashSet<String>(fileList.keySet());
+            oos.writeObject(files);
+        }
+
     }
 
-    private void listFile(OutputStream outputStream) throws IOException{
-        log.info("client requests file list");
-        ObjectOutputStream oos = new ObjectOutputStream(outputStream);
-        Set<String> files = new HashSet<String>(fileList.keySet());
-        oos.writeObject(files);
-    }
+
 
     private void loadFiles() {
         File folder = new File("files");
