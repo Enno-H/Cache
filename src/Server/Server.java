@@ -139,7 +139,7 @@ public class Server {
 
 
     private void loadFiles() {
-        File folder = new File("files");
+        File folder = new File("serverFiles");
         log.info("path:" + folder.getAbsolutePath());
         File[] listOfFiles = folder.listFiles();
         if (listOfFiles == null) {

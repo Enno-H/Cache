@@ -14,7 +14,6 @@ public class Client {
 
     private static Logger log = Logger.getLogger(Client.class.getName());
     private static final String LIST_FILES_COMMAND = "list files";
-    private Socket socket;
 
     private static final int SERVER_PORT = 8080;
     private static final int CACHE_PORT = 8081;
@@ -28,9 +27,13 @@ public class Client {
 
         Client client = new Client();
         try {
-            client.listFiles();
+            //client.listFiles();
 
-            //client.requestFile("1.txt");
+            client.requestFile("1.txt");
+
+
+            client.requestFile("2.txt");
+
 
 
         } catch (UnknownHostException e) {
@@ -76,12 +79,20 @@ public class Client {
         Socket clientSocket = new Socket("localhost",CACHE_PORT);
         DataOutputStream dos = new DataOutputStream(clientSocket.getOutputStream());
         DataInputStream dis = new DataInputStream(clientSocket.getInputStream());
-        FileOutputStream fos = new FileOutputStream(fileName);
+        //FileOutputStream fos = new FileOutputStream(fileName);
+
+        File directory = new File("clientFiles");
+        log.info("path:" + directory.getAbsolutePath());
+        if(!directory.exists()) {
+            directory.mkdir();
+        }
+
+        File file = new File(directory.getAbsolutePath() + File.separatorChar + fileName);
+        FileOutputStream fos = new FileOutputStream(file);
+
+
         try {
             dos.writeUTF(fileName);
-
-
-            String Name = dis.readUTF();
             long fileLength = dis.readLong();
 
 
@@ -105,6 +116,11 @@ public class Client {
 
         } catch (IOException e){
             e.printStackTrace();
+        } finally {
+            dis.close();
+            dos.close();
+            fos.close();
+            clientSocket.close();
         }
 
 

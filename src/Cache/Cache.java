@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.rmi.UnknownHostException;
+import java.util.HashMap;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -14,12 +15,18 @@ public class Cache {
     private static final int SERVER_PORT = 8080;
     private static final int CACHE_PORT = 8081;
 
+    private HashMap<String, File> cachedFileList = new HashMap<>();
+
 
 
     public static void main(String[] args) {
         Cache cache = new Cache();
-        //cache.loadFiles();
+        cache.load();
         cache.runCache();
+    }
+
+    private void load(){
+        cachedFileList = new HashMap<>();
     }
 
     private void runCache(){
@@ -42,10 +49,12 @@ public class Cache {
 
         private Socket socket;
 
+        private OutputStream os_toClient;
         private DataInputStream dis_fromClient;
         private DataOutputStream dos_toClient;
+        private DataInputStream dis_fromServer;
+        private DataOutputStream dos_toServer;
 
-        private FileInputStream fis;
 
         public Task(Socket socket) {
             this.socket = socket;
@@ -54,9 +63,10 @@ public class Cache {
         @Override
         public void run() {
             try {
+                os_toClient = socket.getOutputStream();
+
                 dis_fromClient = new DataInputStream(socket.getInputStream());
                 dos_toClient = new DataOutputStream(socket.getOutputStream());
-                OutputStream os_toClient = socket.getOutputStream();
 
                 String commandFromClient = dis_fromClient.readUTF();
                 log.info("received command : [" + commandFromClient + "]");
@@ -64,11 +74,10 @@ public class Cache {
 
                 //判断命令
                 if (commandFromClient.equals("list files")) {
-                    //TODO 展示可用文件
-                    listFiles(os_toClient);
+                    listFiles();
 
                 } else {
-                    //TODO 下载文件
+                    sendFiles(commandFromClient);
                 }
 
             } catch (IOException e) {
@@ -76,7 +85,7 @@ public class Cache {
             }
         }
 
-        private void listFiles(OutputStream os_toClient) throws UnknownHostException, IOException{
+        private void listFiles() throws UnknownHostException, IOException{
             log.info("client requests file list");
 
 
@@ -101,7 +110,94 @@ public class Cache {
 
         }
 
+        private void sendFiles(String fileName) throws UnknownHostException, IOException{
+            log.info("client requests transfer file:"+fileName);
 
+            try {
+                //File file = cachedFileList.get(fileName);
+                //如果没有缓存过
+                if(!cachedFileList.containsKey(fileName)){
+                    System.out.println("没有缓存过");
+
+                    Socket cacheSocket = new Socket("localhost",SERVER_PORT);
+                    dos_toServer = new DataOutputStream(cacheSocket.getOutputStream());
+                    dis_fromServer = new DataInputStream(cacheSocket.getInputStream());
+                    //FileOutputStream fos = new FileOutputStream(fileName);
+
+                    File directory = new File("cacheFiles");
+                    log.info("path:" + directory.getAbsolutePath());
+                    if(!directory.exists()) {
+                        directory.mkdir();
+                    }
+
+                    File file = new File(directory.getAbsolutePath() + File.separatorChar + fileName);
+                    FileOutputStream fos = new FileOutputStream(file);
+
+                    try {
+                        dos_toServer.writeUTF(fileName);
+                        dos_toServer.flush();
+                        long fileLength = dis_fromServer.readLong();
+
+                        //开始接受文件
+                        System.out.println("======== 开始接收文件 ========");
+                        byte[] bytes = new byte[5000];
+                        int length = 0;
+                        long progress = 0;
+                        while((length = dis_fromServer.read(bytes, 0, bytes.length)) != -1) {
+                            fos.write(bytes, 0, length);
+                            fos.flush();
+                            progress += length;
+                            System.out.print("| " + (100*progress/fileLength) + "% |");
+                        }
+                        System.out.println();
+                        System.out.println("======== 文件接收成功 ========");
+
+                        System.out.println("*****"+file.length());
+                        cachedFileList.put(fileName, file);
+
+
+                    } catch (IOException e){
+                        e.printStackTrace();
+                    } finally {
+                        dos_toServer.close();
+                        dis_fromServer.close();
+                        cacheSocket.close();
+                    }
+
+
+                }
+
+                try {
+                    File file = cachedFileList.get(fileName);
+                    FileInputStream fis = new FileInputStream(file);
+
+                    // 文件名和长度
+                    dos_toClient.writeLong(file.length());
+                    dos_toClient.flush();
+
+                    // 开始传输文件
+                    System.out.println("======== 开始向Client传输缓存文件 ========");
+                    byte[] bytes = new byte[5000];
+                    int length = 0;
+                    long progress = 0;
+                    while((length = fis.read(bytes, 0, bytes.length)) != -1) {
+                        dos_toClient.write(bytes, 0, length);
+                        dos_toClient.flush();
+                        progress += length;
+                        System.out.print("| " + (100*progress/file.length()) + "% |");
+                        System.out.println();
+                        System.out.println("======== 缓存文件传输成功 ========");
+                    }
+                } catch (IOException e){
+                    e.printStackTrace();
+                } finally {
+                    dos_toClient.close();
+                }
+
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 
 
