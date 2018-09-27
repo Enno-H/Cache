@@ -22,6 +22,7 @@ public class Cache {
     public static void main(String[] args) {
         Cache cache = new Cache();
         cache.load();
+        cache.deleteFiles();
         cache.runCache();
     }
 
@@ -197,6 +198,16 @@ public class Cache {
             } catch (Exception e){
                 e.printStackTrace();
             }
+        }
+    }
+
+
+    private void deleteFiles(){
+        File directory = new File("cacheFiles");
+        File[] listOfFiles = directory.listFiles();
+        for (File file : listOfFiles) {
+            log.info("delete file: "+ file.getName());
+            file.delete();
         }
     }
 

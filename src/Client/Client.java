@@ -27,6 +27,9 @@ public class Client {
 
         Client client = new Client();
         try {
+            client.deleteFiles();
+
+
             //client.listFiles();
 
             client.requestFile("1.txt");
@@ -132,5 +135,13 @@ public class Client {
         return serverFileList;
     }
 
+    private void deleteFiles(){
+        File directory = new File("clientFiles");
+        File[] listOfFiles = directory.listFiles();
+        for (File file : listOfFiles) {
+            log.info("delete file: "+ file.getName());
+            file.delete();
+        }
+    }
 
 }
