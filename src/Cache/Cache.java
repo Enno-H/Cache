@@ -4,8 +4,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.rmi.UnknownHostException;
-import java.util.HashMap;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class Cache {
@@ -16,6 +15,10 @@ public class Cache {
     private static final int CACHE_PORT = 8081;
 
     private HashMap<String, File> cachedFileList = new HashMap<>();
+
+    //Part 2
+    private Map<String, FileFragments> fileFragmentsMap = new HashMap<>();
+    private Map<String, byte[]> digestToPartsMap = new HashMap<String, byte[]>();
 
 
 
@@ -199,6 +202,34 @@ public class Cache {
                 e.printStackTrace();
             }
         }
+
+        private void transferFile(String fileName) throws FileNotFoundException, IOException{
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            int totalSize = 0;
+            int cachedSize = 0;
+            if(!fileFragmentsMap.containsKey(fileName)){
+                log.info("file not found");
+                return;
+            } else {
+                FileFragments fragments = fileFragmentsMap.get(fileName);
+                for (String digest: fragments.getFragmentDigestList()){
+                    if(digestToPartsMap.containsKey(digest)){
+                        byte[] filePart = digestToPartsMap.get(digest);
+                        totalSize = totalSize + filePart.length;
+                        cachedSize = cachedSize + filePart.length;
+                        bos.write(filePart);
+                    } else{
+                        //TODO 从服务器读取
+
+                    }
+                }
+            }
+
+        }
+
+        private byte[] requestFilePartFromServer(String digest){
+            return null;
+        }
     }
 
 
@@ -208,6 +239,19 @@ public class Cache {
         for (File file : listOfFiles) {
             log.info("delete file: "+ file.getName());
             file.delete();
+        }
+    }
+
+    //内部类
+    class FileFragments implements Serializable {
+        private List<String> fragmentDigestList = new ArrayList<>();
+
+        public List<String> getFragmentDigestList() {
+            return fragmentDigestList;
+        }
+
+        public void setFragmentDigestList(List<String> fragmentDigestList) {
+            this.fragmentDigestList = fragmentDigestList;
         }
     }
 
