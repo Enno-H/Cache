@@ -30,12 +30,12 @@ public class Client {
             client.deleteFiles();
 
 
-            //client.listFiles();
+            client.listFiles();
 
             client.requestFile("1.txt");
 
 
-            client.requestFile("2.txt");
+            //client.requestFile("2.txt");
 
 
 

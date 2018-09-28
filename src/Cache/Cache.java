@@ -81,7 +81,8 @@ public class Cache {
                     listFiles();
 
                 } else {
-                    sendFiles(commandFromClient);
+                    //sendFiles(commandFromClient);
+                    transferFile(commandFromClient);
                 }
 
             } catch (IOException e) {
@@ -100,7 +101,10 @@ public class Cache {
             System.out.println("Sending listFile request to Server");
             try {
                 //从Server接收
+
                 Set<String> files = (Set<String>) ois_fromServer.readObject();
+                fileFragmentsMap = (Map<String, FileFragments>) ois_fromServer.readObject();
+                System.out.println("&&&&"+fileFragmentsMap.size());
                 for (String fileName : files) {
                     log.info(fileName);
                 }
@@ -110,6 +114,10 @@ public class Cache {
 
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
+            } finally {
+                dos_toServer.close();
+                ois_fromServer.close();
+                cacheSocket.close();
             }
 
         }
@@ -278,7 +286,7 @@ public class Cache {
     }
 
     //内部类
-    class FileFragments implements Serializable {
+    static class FileFragments implements Serializable {
         private List<String> fragmentDigestList = new ArrayList<>();
 
         public List<String> getFragmentDigestList() {

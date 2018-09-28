@@ -19,8 +19,9 @@ public class Server {
 
     private FileFragmenter fragmenter = new FileFragmenter();
 
+    //Part 2
     private Map<String, byte[]> digestToPartsMap = new HashMap<String, byte[]>();
-    private Map<String, FileFragments> fileFragmentsMap = new HashMap<String, FileFragments>();
+    private HashMap<String, FileFragments> fileFragmentsMap = new HashMap<String, FileFragments>();
 
     private static final int SERVER_PORT = 8080;
     private static final int CACHE_PORT = 8081;
@@ -28,7 +29,7 @@ public class Server {
 
     public static void main(String[] args) {
             Server server = new Server();
-            server.loadFiles();
+            server.loadFiles2();
             server.runServer();
     }
 
@@ -81,7 +82,8 @@ public class Server {
                     listFile(os);
 
                 } else {
-                    sendFile(os, commandFromClient);
+                    //sendFile(os, commandFromClient);
+                    transferFile(os,commandFromClient);
                 }
 
             } catch (SocketTimeoutException s) {
@@ -137,9 +139,31 @@ public class Server {
 
         private void listFile(OutputStream outputStream) throws IOException{
             log.info("client requests file list");
+
+
+
             ObjectOutputStream oos = new ObjectOutputStream(outputStream);
             Set<String> files = new HashSet<String>(fileList.keySet());
             oos.writeObject(files);
+            oos.writeObject(fileFragmentsMap);
+
+        }
+
+        private void transferFile(OutputStream outputStream, String digestString)
+                throws FileNotFoundException, IOException {
+            byte[]  filePart= digestToPartsMap.get(digestString);
+            byte[] tempByteArray = new byte[2048];
+            ByteArrayInputStream bis = new ByteArrayInputStream(filePart);
+            DataInputStream dis = new DataInputStream(bis);
+            DataOutputStream outToClient = new DataOutputStream(outputStream);
+            int read;
+            while ((read = dis.read(tempByteArray)) != -1) {
+                outToClient.write(tempByteArray, 0, read);
+                outToClient.flush();
+            }
+
+            bis.close();
+            dis.close();
         }
 
     }
@@ -165,15 +189,12 @@ public class Server {
 
         try {
             md = MessageDigest.getInstance("MD5");
-            File folder = new File("files");
+            File folder = new File("serverFiles");
             log.info(folder.getAbsolutePath());
             File[] listOfFiles = folder.listFiles();
             if (listOfFiles == null) {
 
                 log.info("wrong directory, no files loaded");
-                folder = new File("src/resources/files");
-                listOfFiles = folder.listFiles();
-                log.info(folder.getAbsolutePath());
             }
             for (File file : listOfFiles) {
                 log.info(file.getName());
@@ -187,12 +208,13 @@ public class Server {
                     String base64Digest = new String(encoded);
                     digestToPartsMap.put(base64Digest, filePart);
                     fileFragments.getFragmentDigestList().add(base64Digest);
-                    log.info("digestToPartsMap map size : " +digestToPartsMap.size() +"");
+                    log.info("digestToPartsMap map size : " +digestToPartsMap.size());
                 }
                 fileFragmentsMap.put(file.getName(), fileFragments);
             }
 
             log.info("digestToPartsMap map size : " +digestToPartsMap.size() +"");
+            //System.out.println("fileFragmentsMap size: "+fileFragmentsMap.size());
         } catch (NoSuchAlgorithmException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -278,7 +300,7 @@ public class Server {
 
     }
 
-    class FileFragments implements Serializable {
+    static class FileFragments implements Serializable {
         private List<String> fragmentDigestList = new ArrayList<>();
 
         public List<String> getFragmentDigestList() {
