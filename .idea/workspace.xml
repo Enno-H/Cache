@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="7fe4010c-4811-47fc-b2eb-c587e5a813ef" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Cache/Cache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Cache/Cache.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Server/Server.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -45,25 +45,25 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="4632" />
-          <entry key="txt" value="336" />
+          <entry key="java" value="4640" />
+          <entry key="txt" value="349" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="4632" />
-          <entry key="PLAIN_TEXT" value="336" />
+          <entry key="JAVA" value="4640" />
+          <entry key="PLAIN_TEXT" value="349" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Server/Server.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="664">
-              <caret line="152" column="5" selection-start-line="152" selection-start-column="5" selection-end-line="152" selection-end-column="5" />
+            <state relative-caret-position="639">
+              <caret line="155" column="4" selection-start-line="155" selection-start-column="4" selection-end-line="155" selection-end-column="4" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#runServer#0;class#Server#0" />
@@ -87,19 +87,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Cache/Cache.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="381">
-              <caret line="219" column="44" lean-forward="true" selection-start-line="219" selection-start-column="44" selection-end-line="219" selection-end-column="44" />
+            <state relative-caret-position="510">
+              <caret line="205" column="33" selection-start-line="205" selection-start-column="33" selection-end-line="205" selection-end-column="33" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#main#0;class#Cache#0" />
                 <element signature="method#runCache#0;class#Cache#0" />
                 <element signature="e#1545#1546#0" expanded="true" />
                 <element signature="e#1589#1590#0" expanded="true" />
-                <element signature="method#run#0;class#Task#0;class#Cache#0" />
-                <element signature="method#listFiles#0;class#Task#0;class#Cache#0" />
+                <element signature="method#sendFiles#0;class#Task#0;class#Cache#0" />
+                <element signature="method#transferFile#0;class#Task#0;class#Cache#0" />
+                <element signature="method#requestFilePartFromServer#0;class#Task#0;class#Cache#0" />
                 <element signature="method#deleteFiles#0;class#Cache#0" />
                 <element signature="class#FileFragments#0;class#Cache#0" />
                 <element signature="e#7833#7834#0" expanded="true" />
@@ -128,9 +129,9 @@
         <option value="$PROJECT_DIR$/files/2.txt" />
         <option value="$PROJECT_DIR$/files/3.txt" />
         <option value="$PROJECT_DIR$/files/1.txt" />
-        <option value="$PROJECT_DIR$/src/Server/Server.java" />
         <option value="$PROJECT_DIR$/src/Client/Client.java" />
         <option value="$PROJECT_DIR$/src/Cache/Cache.java" />
+        <option value="$PROJECT_DIR$/src/Server/Server.java" />
       </list>
     </option>
   </component>
@@ -182,7 +183,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1538107485692" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1538108778297" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="/usr/local/bin/node" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -269,7 +270,7 @@
       <workItem from="1537588373151" duration="6343000" />
       <workItem from="1537763521462" duration="7148000" />
       <workItem from="1537852072276" duration="28013000" />
-      <workItem from="1538047635641" duration="7129000" />
+      <workItem from="1538047635641" duration="7702000" />
     </task>
     <task id="LOCAL-00001" summary="Server: loadFile()">
       <created>1537591439024</created>
@@ -341,14 +342,21 @@
       <option name="project" value="LOCAL" />
       <updated>1538091814970</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Cache(Part 2): requestFilePartFromServer() (NOT TEST)">
+      <created>1538107641240</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1538107641240</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="50390000" />
+    <option name="totallyTimeSpent" value="50963000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="722" y="0" width="718" height="900" extended-state="0" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.26037195" />
@@ -398,7 +406,8 @@
     <MESSAGE value="Cache initial commit" />
     <MESSAGE value="Server&lt;-&gt;Cache-&gt;Client: listFiles() is finished" />
     <MESSAGE value="Cache(Part 2): TODO requestFilePartFromServer()" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cache(Part 2): TODO requestFilePartFromServer()" />
+    <MESSAGE value="Cache(Part 2): requestFilePartFromServer() (NOT TEST)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cache(Part 2): requestFilePartFromServer() (NOT TEST)" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/WebCache.iml">
@@ -460,36 +469,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Server/Server.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="664">
-          <caret line="152" column="5" selection-start-line="152" selection-start-column="5" selection-end-line="152" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#runServer#0;class#Server#0" />
-            <element signature="class#Task#0;class#Server#0" />
-            <element signature="method#sendFile#0;class#Task#0;class#Server#0" />
-            <element signature="method#listFile#0;class#Task#0;class#Server#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Cache/Cache.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="381">
-          <caret line="219" column="44" lean-forward="true" selection-start-line="219" selection-start-column="44" selection-end-line="219" selection-end-column="44" />
+        <state relative-caret-position="510">
+          <caret line="205" column="33" selection-start-line="205" selection-start-column="33" selection-end-line="205" selection-end-column="33" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#main#0;class#Cache#0" />
             <element signature="method#runCache#0;class#Cache#0" />
             <element signature="e#1545#1546#0" expanded="true" />
             <element signature="e#1589#1590#0" expanded="true" />
-            <element signature="method#run#0;class#Task#0;class#Cache#0" />
-            <element signature="method#listFiles#0;class#Task#0;class#Cache#0" />
+            <element signature="method#sendFiles#0;class#Task#0;class#Cache#0" />
+            <element signature="method#transferFile#0;class#Task#0;class#Cache#0" />
+            <element signature="method#requestFilePartFromServer#0;class#Task#0;class#Cache#0" />
             <element signature="method#deleteFiles#0;class#Cache#0" />
             <element signature="class#FileFragments#0;class#Cache#0" />
             <element signature="e#7833#7834#0" expanded="true" />
             <element signature="e#7882#7883#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Server/Server.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="639">
+          <caret line="155" column="4" selection-start-line="155" selection-start-column="4" selection-end-line="155" selection-end-column="4" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#runServer#0;class#Server#0" />
+            <element signature="class#Task#0;class#Server#0" />
+            <element signature="method#sendFile#0;class#Task#0;class#Server#0" />
+            <element signature="method#listFile#0;class#Task#0;class#Server#0" />
           </folding>
         </state>
       </provider>
