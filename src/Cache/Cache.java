@@ -220,14 +220,49 @@ public class Cache {
                         bos.write(filePart);
                     } else{
                         //TODO 从服务器读取
-
+                        byte[] filePart = requestFilePartFromServer(digest);
+                        totalSize = totalSize + filePart.length;
+                        bos.write(filePart);
                     }
                 }
             }
 
+            byte[] tempByteArray = new byte[8132];
+            ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
+            DataInputStream dis = new DataInputStream(bis);
+            dos_toClient = new DataOutputStream(os_toClient);
+            int read;
+            while((read = dis.read(tempByteArray)) != -1){
+                dos_toClient.write(tempByteArray, 0, read);
+                dos_toClient.flush();
+            }
+            bis.close();
+            dis.close();
         }
 
-        private byte[] requestFilePartFromServer(String digest){
+        private byte[] requestFilePartFromServer(String digest) throws IOException {
+            Socket cacheClient = new Socket("localhost", SERVER_PORT);
+            dos_toServer = new DataOutputStream(cacheClient.getOutputStream());
+            dis_fromServer = new DataInputStream(cacheClient.getInputStream());
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            try {
+                dos_toServer.writeUTF(digest);
+
+                byte[] buffer = new byte[2048];
+                int read = 0;
+                while ((read = dis_fromServer.read(buffer)) != -1){
+                    bos.write(buffer, 0, read);
+                }
+                digestToPartsMap.put(digest, bos.toByteArray());
+                return bos.toByteArray();
+            } catch (IOException e){
+                e.printStackTrace();
+            } finally {
+                dos_toServer.close();
+                dis_fromServer.close();
+                cacheClient.close();
+            }
+
             return null;
         }
     }
