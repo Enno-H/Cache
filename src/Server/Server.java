@@ -1,5 +1,7 @@
 package Server;
 
+import FileFragments.FileFragments;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -145,12 +147,13 @@ public class Server {
             ObjectOutputStream oos = new ObjectOutputStream(outputStream);
             Set<String> files = new HashSet<String>(fileList.keySet());
             oos.writeObject(files);
+            oos.flush();
             oos.writeObject(fileFragmentsMap);
+            oos.flush();
 
         }
 
-        private void transferFile(OutputStream outputStream, String digestString)
-                throws FileNotFoundException, IOException {
+        private void transferFile(OutputStream outputStream, String digestString) throws FileNotFoundException, IOException {
             byte[]  filePart= digestToPartsMap.get(digestString);
             byte[] tempByteArray = new byte[2048];
             ByteArrayInputStream bis = new ByteArrayInputStream(filePart);
@@ -214,7 +217,7 @@ public class Server {
             }
 
             log.info("digestToPartsMap map size : " +digestToPartsMap.size() +"");
-            //System.out.println("fileFragmentsMap size: "+fileFragmentsMap.size());
+            System.out.println("fileFragmentsMap size: "+fileFragmentsMap.size());
         } catch (NoSuchAlgorithmException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -298,18 +301,6 @@ public class Server {
 
 
 
-    }
-
-    static class FileFragments implements Serializable {
-        private List<String> fragmentDigestList = new ArrayList<>();
-
-        public List<String> getFragmentDigestList() {
-            return fragmentDigestList;
-        }
-
-        public void setFragmentDigestList(List<String> fragmentDigestList) {
-            this.fragmentDigestList = fragmentDigestList;
-        }
     }
 
 

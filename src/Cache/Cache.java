@@ -7,6 +7,9 @@ import java.rmi.UnknownHostException;
 import java.util.*;
 import java.util.logging.Logger;
 
+import FileFragments.FileFragments;
+
+
 public class Cache {
 
     private Logger log = Logger.getLogger(Cache.class.getName());
@@ -150,7 +153,7 @@ public class Cache {
                         dos_toServer.flush();
                         long fileLength = dis_fromServer.readLong();
 
-                        //开始接受文件
+                        //开始接收文件
                         System.out.println("======== 开始接收文件 ========");
                         byte[] bytes = new byte[5000];
                         int length = 0;
@@ -178,6 +181,8 @@ public class Cache {
 
 
                 }
+                //上一阶段（接收）：        data-》file
+                //下一阶段（发送给Client）  file-》data
 
                 try {
                     File file = cachedFileList.get(fileName);
@@ -222,12 +227,16 @@ public class Cache {
                 FileFragments fragments = fileFragmentsMap.get(fileName);
                 for (String digest: fragments.getFragmentDigestList()){
                     if(digestToPartsMap.containsKey(digest)){
+                        //TODO 有缓存
+                        System.out.println("有Cache");
                         byte[] filePart = digestToPartsMap.get(digest);
                         totalSize = totalSize + filePart.length;
                         cachedSize = cachedSize + filePart.length;
                         bos.write(filePart);
                     } else{
-                        //TODO 从服务器读取
+                        //TODO 从Server读取
+                        System.out.println("total loop:"+fragments.getFragmentDigestList().size());
+                        System.out.println("没cache");
                         byte[] filePart = requestFilePartFromServer(digest);
                         totalSize = totalSize + filePart.length;
                         bos.write(filePart);
@@ -235,17 +244,52 @@ public class Cache {
                 }
             }
 
-            byte[] tempByteArray = new byte[8132];
-            ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
-            DataInputStream dis = new DataInputStream(bis);
-            dos_toClient = new DataOutputStream(os_toClient);
-            int read;
-            while((read = dis.read(tempByteArray)) != -1){
-                dos_toClient.write(tempByteArray, 0, read);
-                dos_toClient.flush();
+            System.out.println("读完毕");
+            System.out.println("total size: "+ totalSize+" ;cached size: "+cachedSize);
+
+            try {
+                byte[] tempByteArray = new byte[8132];
+                ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
+                DataInputStream dis = new DataInputStream(bis);
+                dos_toClient = new DataOutputStream(os_toClient);
+
+
+
+                int read;
+                while((read = dis.read(tempByteArray)) != -1){
+                    System.out.println("向client写标记");
+                    dos_toClient.write(tempByteArray, 0, read);
+                    dos_toClient.flush();
+                }
+            } catch (IOException e){
+                e.printStackTrace();
+            } finally {
+                //System.out.println("哈哈哈");
+                dos_toClient.close();
             }
-            bis.close();
-            dis.close();
+
+
+
+
+
+            /*** 开始传输文件
+            System.out.println("======== 开始向Client传输缓存文件 ========");
+            byte[] bytes = new byte[5000];
+            int length = 0;
+            long progress = 0;
+            while((length = fis.read(bytes, 0, bytes.length)) != -1) {
+                dos_toClient.write(bytes, 0, length);
+                dos_toClient.flush();
+                progress += length;
+                System.out.print("| " + (100*progress/file.length()) + "% |");
+                System.out.println();
+                System.out.println("======== 缓存文件传输成功 ========");
+            }
+             **/
+
+
+
+
         }
 
         private byte[] requestFilePartFromServer(String digest) throws IOException {
@@ -282,19 +326,6 @@ public class Cache {
         for (File file : listOfFiles) {
             log.info("delete file: "+ file.getName());
             file.delete();
-        }
-    }
-
-    //内部类
-    static class FileFragments implements Serializable {
-        private List<String> fragmentDigestList = new ArrayList<>();
-
-        public List<String> getFragmentDigestList() {
-            return fragmentDigestList;
-        }
-
-        public void setFragmentDigestList(List<String> fragmentDigestList) {
-            this.fragmentDigestList = fragmentDigestList;
         }
     }
 

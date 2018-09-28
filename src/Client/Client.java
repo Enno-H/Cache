@@ -35,9 +35,6 @@ public class Client {
             client.requestFile("1.txt");
 
 
-            //client.requestFile("2.txt");
-
-
 
         } catch (UnknownHostException e) {
             e.printStackTrace();
@@ -82,7 +79,6 @@ public class Client {
         Socket clientSocket = new Socket("localhost",CACHE_PORT);
         DataOutputStream dos = new DataOutputStream(clientSocket.getOutputStream());
         DataInputStream dis = new DataInputStream(clientSocket.getInputStream());
-        //FileOutputStream fos = new FileOutputStream(fileName);
 
         File directory = new File("clientFiles");
         log.info("path:" + directory.getAbsolutePath());
@@ -96,21 +92,23 @@ public class Client {
 
         try {
             dos.writeUTF(fileName);
-            long fileLength = dis.readLong();
+            //long fileLength = dis.readLong();
+            //System.out.println("文件长度为："+ fileLength);
 
 
 
 
             // 开始接收文件
             System.out.println("======== 开始接收文件 ========");
-            byte[] bytes = new byte[5000];
+            byte[] bytes = new byte[8132];
             int length = 0;
             long progress = 0;
             while((length = dis.read(bytes, 0, bytes.length)) != -1) {
+                System.out.println("While Marker #####");
                 fos.write(bytes, 0, length);
                 fos.flush();
                 progress += length;
-                System.out.print("| " + (100*progress/fileLength) + "% |");
+                //System.out.print("| " + (100*progress/fileLength) + "% |");
             }
             System.out.println();
             System.out.println("======== 文件传输成功 ========");
