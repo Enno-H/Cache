@@ -45,14 +45,14 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="4640" />
-          <entry key="txt" value="349" />
+          <entry key="java" value="4697" />
+          <entry key="txt" value="372" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="4640" />
-          <entry key="PLAIN_TEXT" value="349" />
+          <entry key="JAVA" value="4697" />
+          <entry key="PLAIN_TEXT" value="372" />
         </counts>
       </usages-collector>
     </session>
@@ -62,14 +62,19 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Server/Server.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="639">
-              <caret line="155" column="4" selection-start-line="155" selection-start-column="4" selection-end-line="155" selection-end-column="4" />
+            <state relative-caret-position="510">
+              <caret line="175" column="50" lean-forward="true" selection-start-line="175" selection-start-column="50" selection-end-line="175" selection-end-column="50" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#runServer#0;class#Server#0" />
                 <element signature="class#Task#0;class#Server#0" />
                 <element signature="method#sendFile#0;class#Task#0;class#Server#0" />
                 <element signature="method#listFile#0;class#Task#0;class#Server#0" />
+                <element signature="class#FileFragmenter#0;class#Server#0" />
+                <element signature="e#5629#5638#0" expanded="true" />
+                <element signature="class#FileFragments#0;class#Server#0" />
+                <element signature="e#9492#9493#0" expanded="true" />
+                <element signature="e#9541#9542#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -90,8 +95,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Cache/Cache.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="205" column="33" selection-start-line="205" selection-start-column="33" selection-end-line="205" selection-end-column="33" />
+            <state relative-caret-position="654">
+              <caret line="280" selection-start-line="280" selection-end-line="291" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#main#0;class#Cache#0" />
@@ -183,7 +188,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1538108778297" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1538110469444" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="/usr/local/bin/node" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -270,7 +275,7 @@
       <workItem from="1537588373151" duration="6343000" />
       <workItem from="1537763521462" duration="7148000" />
       <workItem from="1537852072276" duration="28013000" />
-      <workItem from="1538047635641" duration="7702000" />
+      <workItem from="1538047635641" duration="8510000" />
     </task>
     <task id="LOCAL-00001" summary="Server: loadFile()">
       <created>1537591439024</created>
@@ -349,11 +354,18 @@
       <option name="project" value="LOCAL" />
       <updated>1538107641240</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Server(Part 2): add inner class FileFragmenter">
+      <created>1538108858745</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1538108858745</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="50963000" />
+    <option name="totallyTimeSpent" value="51771000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="6" />
@@ -407,7 +419,8 @@
     <MESSAGE value="Server&lt;-&gt;Cache-&gt;Client: listFiles() is finished" />
     <MESSAGE value="Cache(Part 2): TODO requestFilePartFromServer()" />
     <MESSAGE value="Cache(Part 2): requestFilePartFromServer() (NOT TEST)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cache(Part 2): requestFilePartFromServer() (NOT TEST)" />
+    <MESSAGE value="Server(Part 2): add inner class FileFragmenter" />
+    <option name="LAST_COMMIT_MESSAGE" value="Server(Part 2): add inner class FileFragmenter" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/WebCache.iml">
@@ -471,8 +484,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Cache/Cache.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="205" column="33" selection-start-line="205" selection-start-column="33" selection-end-line="205" selection-end-column="33" />
+        <state relative-caret-position="654">
+          <caret line="280" selection-start-line="280" selection-end-line="291" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#main#0;class#Cache#0" />
@@ -492,14 +505,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Server/Server.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="639">
-          <caret line="155" column="4" selection-start-line="155" selection-start-column="4" selection-end-line="155" selection-end-column="4" />
+        <state relative-caret-position="510">
+          <caret line="175" column="50" lean-forward="true" selection-start-line="175" selection-start-column="50" selection-end-line="175" selection-end-column="50" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#runServer#0;class#Server#0" />
             <element signature="class#Task#0;class#Server#0" />
             <element signature="method#sendFile#0;class#Task#0;class#Server#0" />
             <element signature="method#listFile#0;class#Task#0;class#Server#0" />
+            <element signature="class#FileFragmenter#0;class#Server#0" />
+            <element signature="e#5629#5638#0" expanded="true" />
+            <element signature="class#FileFragments#0;class#Server#0" />
+            <element signature="e#9492#9493#0" expanded="true" />
+            <element signature="e#9541#9542#0" expanded="true" />
           </folding>
         </state>
       </provider>

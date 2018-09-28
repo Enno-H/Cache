@@ -7,6 +7,8 @@ import java.net.SocketTimeoutException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -14,6 +16,11 @@ public class Server {
 
     private HashMap<String, File> fileList = new HashMap<>();
     private Logger log = Logger.getLogger(Server.class.getName());
+
+    private FileFragmenter fragmenter = new FileFragmenter();
+
+    private Map<String, byte[]> digestToPartsMap = new HashMap<String, byte[]>();
+    private Map<String, FileFragments> fileFragmentsMap = new HashMap<String, FileFragments>();
 
     private static final int SERVER_PORT = 8080;
     private static final int CACHE_PORT = 8081;
@@ -153,6 +160,45 @@ public class Server {
         }
     }
 
+    private void loadFiles2(){
+        MessageDigest md;
+
+        try {
+            md = MessageDigest.getInstance("MD5");
+            File folder = new File("files");
+            log.info(folder.getAbsolutePath());
+            File[] listOfFiles = folder.listFiles();
+            if (listOfFiles == null) {
+
+                log.info("wrong directory, no files loaded");
+                folder = new File("src/resources/files");
+                listOfFiles = folder.listFiles();
+                log.info(folder.getAbsolutePath());
+            }
+            for (File file : listOfFiles) {
+                log.info(file.getName());
+                fileList.put(file.getName(), file);
+                List<byte[]> fragmentList = fragmenter.fragment(file.getAbsolutePath());
+                FileFragments fileFragments = new FileFragments();
+                for (byte[] filePart : fragmentList) {
+
+                    byte[] thedigest = md.digest(filePart);
+                    byte[] encoded = Base64.getEncoder().encode(thedigest);
+                    String base64Digest = new String(encoded);
+                    digestToPartsMap.put(base64Digest, filePart);
+                    fileFragments.getFragmentDigestList().add(base64Digest);
+                    log.info("digestToPartsMap map size : " +digestToPartsMap.size() +"");
+                }
+                fileFragmentsMap.put(file.getName(), fileFragments);
+            }
+
+            log.info("digestToPartsMap map size : " +digestToPartsMap.size() +"");
+        } catch (NoSuchAlgorithmException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
     //内部类
     class FileFragmenter{
 
@@ -231,5 +277,18 @@ public class Server {
 
 
     }
+
+    class FileFragments implements Serializable {
+        private List<String> fragmentDigestList = new ArrayList<>();
+
+        public List<String> getFragmentDigestList() {
+            return fragmentDigestList;
+        }
+
+        public void setFragmentDigestList(List<String> fragmentDigestList) {
+            this.fragmentDigestList = fragmentDigestList;
+        }
+    }
+
 
 }
