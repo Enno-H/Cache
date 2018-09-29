@@ -52,7 +52,7 @@ public class Client {
         }
     }
 
-    private void listFiles() throws UnknownHostException, IOException{
+    public void listFiles() throws UnknownHostException, IOException{
 
         this.serverFileList = new ArrayList<String>();
         Socket clientSocket = new Socket("localhost",CACHE_PORT);
