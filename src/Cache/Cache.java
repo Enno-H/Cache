@@ -4,6 +4,8 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.rmi.UnknownHostException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -22,6 +24,8 @@ public class Cache {
     //Part 2
     private Map<String, FileFragments> fileFragmentsMap = new HashMap<>();
     private Map<String, byte[]> digestToPartsMap = new HashMap<String, byte[]>();
+
+    private String cacheLog = new String();
 
 
 
@@ -84,8 +88,8 @@ public class Cache {
                     listFiles();
 
                 } else {
-                    //sendFiles(commandFromClient);
-                    transferFile(commandFromClient);
+                    sendFiles(commandFromClient);
+                    //transferFile(commandFromClient);
                 }
 
             } catch (IOException e) {
@@ -129,7 +133,6 @@ public class Cache {
             log.info("client requests transfer file:"+fileName);
 
             try {
-                //File file = cachedFileList.get(fileName);
                 //如果没有缓存过
                 if(!cachedFileList.containsKey(fileName)){
                     System.out.println("没有缓存过");
@@ -189,8 +192,8 @@ public class Cache {
                     FileInputStream fis = new FileInputStream(file);
 
                     // 文件名和长度
-                    dos_toClient.writeLong(file.length());
-                    dos_toClient.flush();
+                    //dos_toClient.writeLong(file.length());
+                    //dos_toClient.flush();
 
                     // 开始传输文件
                     System.out.println("======== 开始向Client传输缓存文件 ========");
@@ -235,7 +238,6 @@ public class Cache {
                         bos.write(filePart);
                     } else{
                         //TODO 从Server读取
-                        System.out.println("total loop:"+fragments.getFragmentDigestList().size());
                         System.out.println("没cache");
                         byte[] filePart = requestFilePartFromServer(digest);
                         totalSize = totalSize + filePart.length;
@@ -257,7 +259,6 @@ public class Cache {
 
                 int read;
                 while((read = dis.read(tempByteArray)) != -1){
-                    System.out.println("向client写标记");
                     dos_toClient.write(tempByteArray, 0, read);
                     dos_toClient.flush();
                 }
@@ -267,28 +268,6 @@ public class Cache {
                 //System.out.println("哈哈哈");
                 dos_toClient.close();
             }
-
-
-
-
-
-            /*** 开始传输文件
-            System.out.println("======== 开始向Client传输缓存文件 ========");
-            byte[] bytes = new byte[5000];
-            int length = 0;
-            long progress = 0;
-            while((length = fis.read(bytes, 0, bytes.length)) != -1) {
-                dos_toClient.write(bytes, 0, length);
-                dos_toClient.flush();
-                progress += length;
-                System.out.print("| " + (100*progress/file.length()) + "% |");
-                System.out.println();
-                System.out.println("======== 缓存文件传输成功 ========");
-            }
-             **/
-
-
-
 
         }
 
@@ -327,6 +306,36 @@ public class Cache {
             log.info("delete file: "+ file.getName());
             file.delete();
         }
+    }
+
+    public String getFilePartString(String string) {
+        if(digestToPartsMap.containsKey(string)){
+            byte[] filePart = digestToPartsMap.get(string);
+            return new String(filePart);
+        }
+        return null;
+    }
+
+    private void writeLog(String fileName, boolean cached) {
+        Date date = new Date();
+        DateFormat df = new SimpleDateFormat("HH:mm:ss yyyy-MM-dd");
+        cacheLog += "user request: file " + fileName + " at " + df.format(date) + "\n";
+        if (cached) {
+            cacheLog += "response: cached file " + fileName + "\n";
+            ;
+        } else {
+            cacheLog += "response: file " + fileName + " downloaded from the server" + "\n";
+
+        }
+    }
+
+    private void writeLog(String fileName, int totalSize, int cachedSize) {
+        Date date = new Date();
+        DateFormat df = new SimpleDateFormat("HH:mm:ss yyyy-MM-dd");
+        cacheLog += "user request: file " + fileName + " at " + df.format(date) + "\n";
+        String percentage = ((double) cachedSize / totalSize * 100 + "");
+        percentage = percentage.substring(0, percentage.indexOf('.'));
+        cacheLog += "response: " + percentage +"% of file " + fileName + " was constructed with the cached data\n";
     }
 
 

@@ -34,6 +34,13 @@ public class Client {
 
             client.requestFile("1.txt");
 
+           // client.requestFile("pic.png");
+
+           // client.requestFile("essay.pdf");
+
+
+
+
 
 
         } catch (UnknownHostException e) {
@@ -104,7 +111,6 @@ public class Client {
             int length = 0;
             long progress = 0;
             while((length = dis.read(bytes, 0, bytes.length)) != -1) {
-                System.out.println("While Marker #####");
                 fos.write(bytes, 0, length);
                 fos.flush();
                 progress += length;
