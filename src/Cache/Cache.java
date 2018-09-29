@@ -88,8 +88,8 @@ public class Cache {
                     listFiles();
 
                 } else {
-                    sendFiles(commandFromClient);
-                    //transferFile(commandFromClient);
+                    //sendFiles(commandFromClient);
+                    transferFile(commandFromClient);
                 }
 
             } catch (IOException e) {

@@ -32,7 +32,9 @@ public class Client {
 
             client.listFiles();
 
-            client.requestFile("1.txt");
+            client.requestFile("1.pdf");
+
+            client.requestFile("2.pdf");
 
            // client.requestFile("pic.png");
 

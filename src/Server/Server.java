@@ -84,8 +84,8 @@ public class Server {
                     listFile(os);
 
                 } else {
-                    sendFile(os, commandFromClient);
-                    //transferFile(os,commandFromClient);
+                    //sendFile(os, commandFromClient);
+                    transferFile(os,commandFromClient);
                 }
 
             } catch (SocketTimeoutException s) {
