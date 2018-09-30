@@ -83,7 +83,7 @@ public class Client {
         }
     }
 
-    private void requestFile(String fileName) throws UnknownHostException, IOException{
+    public void requestFile(String fileName) throws UnknownHostException, IOException{
 
         Socket clientSocket = new Socket("localhost",CACHE_PORT);
         DataOutputStream dos = new DataOutputStream(clientSocket.getOutputStream());
