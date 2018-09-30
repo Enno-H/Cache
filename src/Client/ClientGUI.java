@@ -15,23 +15,26 @@ public class ClientGUI extends JFrame {
     private Client client;
 
     private JButton btnDownload;
-    private JTextArea myTextArea;
     private JPanel rootPanel;
     private JList serverFileList;
-    private JFormattedTextField fileContent;
     private JButton btnRefresh;
+    private JList downloadedFileList;
+    private JButton btnContent;
+    private JTextField fileContent;
 
 
     //init
     public ClientGUI(){
+
+
 
         this.client = new Client();
 
 
 
         add(rootPanel);
-        setTitle("GUI");
-        setSize(400,500);
+        setTitle("CLIENT");
+        setSize(800,500);
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -78,6 +81,7 @@ public class ClientGUI extends JFrame {
             }
         });
 
+        //下载按钮
 
         btnDownload.addMouseListener(new MouseAdapter() {
             @Override
@@ -91,6 +95,7 @@ public class ClientGUI extends JFrame {
                     System.out.println("selected file : " + fileName);
                     try {
                         client.requestFile(fileName);
+                        downloadedFileList.setListData( client.getDownloadedFileList().toArray(new String[0]));
                     } catch (UnknownHostException e1) {
                         e1.printStackTrace();
                     } catch (IOException e1) {
@@ -101,6 +106,7 @@ public class ClientGUI extends JFrame {
         });
 
         btnDownload.setEnabled(false);
+        btnContent.setEnabled(false);
 
         serverFileList.addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -111,12 +117,20 @@ public class ClientGUI extends JFrame {
             }
         });
 
+        downloadedFileList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if(downloadedFileList.getSelectedIndex() != -1){
+                    btnContent.setEnabled(true);
+                    fileContent.setText(client.getFileContent((String)downloadedFileList.getSelectedValue()));
+                }
+            }
+        });
 
 
 
 
 
-        //TODO serverFileList
 
 
 

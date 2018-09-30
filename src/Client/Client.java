@@ -4,6 +4,9 @@ package Client;
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -26,23 +29,18 @@ public class Client {
     public static void main(String[] args) {
 
         Client client = new Client();
+
         try {
-            client.deleteFiles();
+            //client.deleteFiles();
 
 
             client.listFiles();
 
-            client.requestFile("1.pdf");
+            //client.requestFile("1.pdf");
 
-            client.requestFile("2.pdf");
+            //client.requestFile("2.pdf");
 
-           // client.requestFile("pic.png");
-
-           // client.requestFile("essay.pdf");
-
-
-
-
+            System.out.println(client.getFileContent("1.txt"));
 
 
         } catch (UnknownHostException e) {
@@ -52,9 +50,14 @@ public class Client {
         }
     }
 
+    public Client(){
+        this.serverFileList = new ArrayList<String>();
+        this.downloadedFileList = new ArrayList<>();
+
+    }
+
     public void listFiles() throws UnknownHostException, IOException{
 
-        this.serverFileList = new ArrayList<String>();
         Socket clientSocket = new Socket("localhost",CACHE_PORT);
         DataOutputStream dos = new DataOutputStream(clientSocket.getOutputStream());
         dos.writeUTF("list files");
@@ -82,6 +85,11 @@ public class Client {
             clientSocket.close();
         }
     }
+
+    public List<String> getDownloadedFileList() {
+        return downloadedFileList;
+    }
+
 
     public void requestFile(String fileName) throws UnknownHostException, IOException{
 
@@ -121,6 +129,10 @@ public class Client {
             System.out.println();
             System.out.println("======== 文件传输成功 ========");
 
+            if (!downloadedFileList.contains(fileName)) {
+                downloadedFileList.add(fileName);
+            }
+
 
 
         } catch (IOException e){
@@ -148,6 +160,18 @@ public class Client {
             log.info("delete file: "+ file.getName());
             file.delete();
         }
+    }
+
+    public String getFileContent(String fileName) {
+        byte[] encoded;
+        try {
+            encoded = Files.readAllBytes(Paths.get("clientFiles",fileName));
+            return new String(encoded, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+        return null;
     }
 
 }
