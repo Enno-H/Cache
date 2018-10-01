@@ -12,11 +12,10 @@ public class CacheGUI extends JFrame{
 
     private JPanel rootPanel;
     private JList cachedFileList;
-    private JTextField logText;
     private JButton btnClear;
-    private JButton btnLog;
     private JTextField fileContent;
     private JButton btnContent;
+    private JTextArea logText;
 
     public CacheGUI(){
 
@@ -69,24 +68,12 @@ public class CacheGUI extends JFrame{
                 CacheGUI cacheGUI = new CacheGUI();
                 cacheGUI.setVisible(true);
                 cacheGUI.cache.start();
-
-
             }
         });
     }
 
     public void setCachedFiles(String[] items){
-
-        /***
-        Display.getDefault().asyncExec(new Runnable() {
-            public void run() {
-                if (!list.isDisposed())
-                    list.setItems(fileNames);
-            }
-        });
-         ***/
         cachedFileList.setListData(items);
-
     }
 
 

@@ -28,7 +28,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="b1d57" class="javax.swing.JTextField" binding="logText">
+          <component id="8e914" class="javax.swing.JTextArea" binding="logText">
             <constraints/>
             <properties/>
           </component>
@@ -58,14 +58,6 @@
           <text value="Clear Cache"/>
         </properties>
       </component>
-      <component id="80560" class="javax.swing.JButton" binding="btnLog">
-        <constraints>
-          <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Download Log"/>
-        </properties>
-      </component>
       <scrollpane id="5d9e7">
         <constraints>
           <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -79,14 +71,6 @@
           </component>
         </children>
       </scrollpane>
-      <component id="695d2" class="javax.swing.JButton" binding="btnContent">
-        <constraints>
-          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Content"/>
-        </properties>
-      </component>
       <component id="8fb64" class="javax.swing.JLabel">
         <constraints>
           <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>

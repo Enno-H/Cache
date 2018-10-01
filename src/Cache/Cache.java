@@ -364,11 +364,11 @@ public class Cache extends Thread{
     private void writeLog(String fileName, boolean cached) {
         Date date = new Date();
         DateFormat df = new SimpleDateFormat("HH:mm:ss yyyy-MM-dd");
-        cacheLog += "user request: file " + fileName + " at " + df.format(date) + "\n";
+        cacheLog += "user request: file " + fileName + " at " + df.format(date) + "\n\n";
         if (cached) {
             cacheLog += "response: cached file " + fileName + "\n";
         } else {
-            cacheLog += "response: file " + fileName + " downloaded from the server" + "\n";
+            cacheLog += "response: file " + fileName + " downloaded from the server" + "\n\n";
         }
         gui.setLogText(cacheLog);
     }
@@ -379,7 +379,7 @@ public class Cache extends Thread{
         cacheLog += "user request: file " + fileName + " at " + df.format(date) + "\n";
         String percentage = ((double) cachedSize / totalSize * 100 + "");
         percentage = percentage.substring(0, percentage.indexOf('.'));
-        cacheLog += "response: " + percentage +"% of file " + fileName + " was constructed with the cached data\n";
+        cacheLog += "response: " + percentage +"% of file " + fileName + " was constructed with the cached data\n\n";
         gui.setLogText(cacheLog);
     }
 
