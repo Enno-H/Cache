@@ -3,8 +3,6 @@ package Client;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -19,7 +17,7 @@ public class ClientGUI extends JFrame {
     private JList serverFileList;
     private JButton btnRefresh;
     private JList downloadedFileList;
-    private JButton btnContent;
+    private JButton btnClear;
     private JTextField fileContent;
 
 
@@ -49,6 +47,8 @@ public class ClientGUI extends JFrame {
                     serverFileList.setListData((String[]) client.getServerFileList().toArray(new String[0]));
                     System.out.println("count      " + serverFileList.getModel().getSize());
                     serverFileList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+                    btnClear.setEnabled(true);
 
 
 
@@ -85,7 +85,7 @@ public class ClientGUI extends JFrame {
         });
 
         btnDownload.setEnabled(false);
-        btnContent.setEnabled(false);
+        btnClear.setEnabled(false);
 
         serverFileList.addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -100,13 +100,25 @@ public class ClientGUI extends JFrame {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if(downloadedFileList.getSelectedIndex() != -1){
-                    btnContent.setEnabled(true);
+                    //btnClear.setEnabled(true);
                     fileContent.setText(client.getFileContent((String)downloadedFileList.getSelectedValue()));
                 }
             }
         });
 
+        btnClear.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                client.clearClient();
+                serverFileList.setListData(new String[0]);
+                downloadedFileList.setListData(new String[0]);
+                fileContent.setText("");
+            }
+        });
     }
+
+
 
 
 

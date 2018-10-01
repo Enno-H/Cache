@@ -323,6 +323,21 @@ public class Cache extends Thread{
         }
     }
 
+    public void clearCache() {
+        //Part 1
+        File directory = new File("cacheFiles");
+        File[] listOfFiles = directory.listFiles();
+        for (File file : listOfFiles) {
+            log.info("delete file: "+ file.getName());
+            file.delete();
+        }
+        cachedFilesMap.clear();
+
+        //Part 2
+        digestToPartsMap.clear();
+        cacheLog = new String();
+    }
+
     public String getFilePartString(String string) {
         if(digestToPartsMap.containsKey(string)){
             byte[] filePart = digestToPartsMap.get(string);
@@ -351,6 +366,8 @@ public class Cache extends Thread{
         percentage = percentage.substring(0, percentage.indexOf('.'));
         cacheLog += "response: " + percentage +"% of file " + fileName + " was constructed with the cached data\n";
     }
+
+
 
 
     public CacheGUI getGui() {

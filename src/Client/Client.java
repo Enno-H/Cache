@@ -50,7 +50,7 @@ public class Client {
     }
 
     public Client(){
-        this.serverFileList = new ArrayList<String>();
+        this.serverFileList = new ArrayList<>();
         this.downloadedFileList = new ArrayList<>();
 
     }
@@ -159,6 +159,17 @@ public class Client {
             log.info("delete file: "+ file.getName());
             file.delete();
         }
+    }
+
+    public void clearClient(){
+        File directory = new File("clientFiles");
+        File[] listOfFiles = directory.listFiles();
+        for (File file : listOfFiles) {
+            log.info("delete file: "+ file.getName());
+            file.delete();
+        }
+        serverFileList.clear();
+        downloadedFileList.clear();
     }
 
     public String getFileContent(String fileName) {
