@@ -23,10 +23,6 @@ public class CacheGUI extends JFrame{
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         this.cache.setGui(this);
-
-        //cache.deleteFiles();
-        //cache.runCache();
-
     }
 
 
@@ -49,7 +45,7 @@ public class CacheGUI extends JFrame{
         });
     }
 
-    public void setCachedFiles(String[] fileNames){
+    public void setCachedFiles(String[] items){
 
         /***
         Display.getDefault().asyncExec(new Runnable() {
@@ -60,7 +56,7 @@ public class CacheGUI extends JFrame{
         });
          ***/
         System.out.println("触发了");
-        cachedFileList.setListData(fileNames);
+        cachedFileList.setListData(items);
 
     }
 

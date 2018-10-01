@@ -14,20 +14,18 @@ import FileFragments.FileFragments;
 
 public class Cache extends Thread{
 
-    private Logger log = Logger.getLogger(Cache.class.getName());
-
     private static final int SERVER_PORT = 8080;
     private static final int CACHE_PORT = 8081;
 
-    private HashMap<String, File> cachedFileList = new HashMap<>();
+    private Logger log = Logger.getLogger(Cache.class.getName());
+    private CacheGUI gui;
 
-    //Part 2
+    private HashMap<String, File> cachedFilesMap = new HashMap<>();
     private Map<String, FileFragments> fileFragmentsMap = new HashMap<>();
     private Map<String, byte[]> digestToPartsMap = new HashMap<String, byte[]>();
 
     private String cacheLog = new String();
 
-    private CacheGUI gui;
 
 
     @Override
@@ -47,7 +45,7 @@ public class Cache extends Thread{
 
 
     private void load(){
-        cachedFileList = new HashMap<>();
+        cachedFilesMap = new HashMap<>();
     }
 
     public void runCache(){
@@ -98,8 +96,8 @@ public class Cache extends Thread{
                     listFiles();
 
                 } else {
-                    sendFiles(commandFromClient);
-                    //transferFile(commandFromClient);
+                    //sendFiles(commandFromClient);
+                    transferFile(commandFromClient);
                 }
 
             } catch (IOException e) {
@@ -144,7 +142,7 @@ public class Cache extends Thread{
 
             try {
                 //如果没有缓存过
-                if(!cachedFileList.containsKey(fileName)){
+                if(!cachedFilesMap.containsKey(fileName)){
                     System.out.println("没有缓存过");
 
                     Socket cacheSocket = new Socket("localhost",SERVER_PORT);
@@ -181,9 +179,9 @@ public class Cache extends Thread{
                         System.out.println("======== 文件接收成功 ========");
 
                         System.out.println("*****"+file.length());
-                        cachedFileList.put(fileName, file);
+                        cachedFilesMap.put(fileName, file);
 
-                        gui.setCachedFiles((String[]) cachedFileList.keySet().toArray(new String[0]));
+                        gui.setCachedFiles((String[]) cachedFilesMap.keySet().toArray(new String[0]));
 
 
                     } catch (IOException e){
@@ -200,7 +198,7 @@ public class Cache extends Thread{
                 //下一阶段（发送给Client）  file-》data
 
                 try {
-                    File file = cachedFileList.get(fileName);
+                    File file = cachedFilesMap.get(fileName);
                     FileInputStream fis = new FileInputStream(file);
 
                     // 文件名和长度
@@ -256,6 +254,8 @@ public class Cache extends Thread{
                         bos.write(filePart);
                     }
                 }
+                gui.setCachedFiles((String[]) digestToPartsMap.keySet().toArray(new String[0]));
+
             }
 
             System.out.println("读完毕");
@@ -281,7 +281,6 @@ public class Cache extends Thread{
             } catch (IOException e){
                 e.printStackTrace();
             } finally {
-                //System.out.println("哈哈哈");
                 dos_toClient.close();
             }
 

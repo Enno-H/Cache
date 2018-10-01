@@ -16,17 +16,17 @@ import java.util.logging.Logger;
 
 public class Server {
 
-    private HashMap<String, File> fileList = new HashMap<>();
-    private Logger log = Logger.getLogger(Server.class.getName());
-
-    private FileFragmenter fragmenter = new FileFragmenter();
-
-    //Part 2
-    private Map<String, byte[]> digestToPartsMap = new HashMap<String, byte[]>();
-    private HashMap<String, FileFragments> fileFragmentsMap = new HashMap<String, FileFragments>();
-
     private static final int SERVER_PORT = 8080;
     private static final int CACHE_PORT = 8081;
+
+    private Logger log = Logger.getLogger(Server.class.getName());
+    private FileFragmenter fragmenter = new FileFragmenter();
+
+    private HashMap<String, File> filesMap = new HashMap<>();
+    private HashMap<String, FileFragments> fileFragmentsMap = new HashMap<>();
+    private Map<String, byte[]> digestToPartsMap = new HashMap<>();
+
+
 
 
     public static void main(String[] args) {
@@ -84,8 +84,8 @@ public class Server {
                     listFile(os);
 
                 } else {
-                    sendFile(os, commandFromClient);
-                    //transferFile(os,commandFromClient);
+                    //sendFile(os, commandFromClient);
+                    transferFile(os,commandFromClient);
                 }
 
             } catch (SocketTimeoutException s) {
@@ -109,7 +109,7 @@ public class Server {
 
         private void sendFile(OutputStream outputStream, String fileName) throws Exception {
             try {
-                File file = fileList.get(fileName);
+                File file = filesMap.get(fileName);
                 if(file.exists()) {
                     FileInputStream fis = new FileInputStream(file);
                     DataOutputStream dos = new DataOutputStream(outputStream);
@@ -145,7 +145,7 @@ public class Server {
 
 
             ObjectOutputStream oos = new ObjectOutputStream(outputStream);
-            Set<String> files = new HashSet<String>(fileList.keySet());
+            Set<String> files = new HashSet<String>(filesMap.keySet());
             oos.writeObject(files);
             oos.flush();
             oos.writeObject(fileFragmentsMap);
@@ -183,7 +183,7 @@ public class Server {
         }
         for (File file : listOfFiles) {
             log.info("add file: "+ file.getName());
-            fileList.put(file.getName(), file);
+            filesMap.put(file.getName(), file);
         }
     }
 
@@ -201,7 +201,7 @@ public class Server {
             }
             for (File file : listOfFiles) {
                 log.info(file.getName());
-                fileList.put(file.getName(), file);
+                filesMap.put(file.getName(), file);
                 List<byte[]> fragmentList = fragmenter.fragment(file.getAbsolutePath());
                 FileFragments fileFragments = new FileFragments();
                 for (byte[] filePart : fragmentList) {

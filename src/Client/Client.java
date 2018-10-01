@@ -15,11 +15,11 @@ import java.util.logging.Logger;
 
 public class Client {
 
-    private static Logger log = Logger.getLogger(Client.class.getName());
-    private static final String LIST_FILES_COMMAND = "list files";
-
     private static final int SERVER_PORT = 8080;
     private static final int CACHE_PORT = 8081;
+
+    private static Logger log = Logger.getLogger(Client.class.getName());
+    private static final String LIST_FILES_COMMAND = "list files";
 
 
     private List<String> serverFileList;
@@ -30,7 +30,7 @@ public class Client {
         Client client = new Client();
 
         try {
-            //client.deleteFiles();
+            client.deleteFiles();
 
 
             client.listFiles();
