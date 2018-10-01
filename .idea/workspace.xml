@@ -3,13 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="7fe4010c-4811-47fc-b2eb-c587e5a813ef" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WebCache/Server/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WebCache/Server/Server.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/WebCache/Client/Client.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WebCache/Client/Client.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Cache/Cache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Cache/Cache.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Cache/CacheGUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/Cache/CacheGUI.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Cache/CacheGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Cache/CacheGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Client/ClientGUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/Client/ClientGUI.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Client/ClientGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Client/ClientGUI.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -56,14 +52,14 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="7156" />
-          <entry key="txt" value="737" />
+          <entry key="java" value="7202" />
+          <entry key="txt" value="746" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="7156" />
-          <entry key="PLAIN_TEXT" value="737" />
+          <entry key="JAVA" value="7202" />
+          <entry key="PLAIN_TEXT" value="746" />
         </counts>
       </usages-collector>
     </session>
@@ -94,12 +90,14 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Cache/CacheGUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="218">
-              <caret line="52" column="36" lean-forward="true" selection-start-line="49" selection-start-column="16" selection-end-line="52" selection-end-column="36" />
+            <state relative-caret-position="318">
+              <caret line="93" column="30" lean-forward="true" selection-start-line="93" selection-start-column="30" selection-end-line="93" selection-end-column="30" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1182#1357#0" expanded="true" />
                 <element signature="e#1356#1357#0" expanded="true" />
+                <element signature="e#2408#2409#0" expanded="true" />
+                <element signature="e#2445#2446#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -108,7 +106,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Server/Server.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="352">
+            <state relative-caret-position="-655">
               <caret line="22" column="61" selection-start-line="22" selection-start-column="61" selection-end-line="22" selection-end-column="61" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -119,14 +117,13 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Cache/Cache.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="52">
-              <caret line="325" column="28" lean-forward="true" selection-start-line="325" selection-start-column="16" selection-end-line="325" selection-end-column="28" />
+            <state relative-caret-position="72">
+              <caret line="201" column="42" lean-forward="true" selection-start-line="201" selection-start-column="42" selection-end-line="201" selection-end-column="42" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#requestFilePartFromServer#0;class#Task#0;class#Cache#0" />
               </folding>
             </state>
           </provider>
@@ -137,11 +134,11 @@
           <provider selected="true" editor-type-id="ui-designer" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Client/ClientGUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="114" column="62" lean-forward="true" selection-start-line="114" selection-start-column="62" selection-end-line="114" selection-end-column="62" />
+            <state relative-caret-position="496">
+              <caret line="31" column="25" lean-forward="true" selection-start-line="31" selection-start-column="25" selection-end-line="31" selection-end-column="25" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#822#1924#0" expanded="true" />
@@ -170,9 +167,9 @@
       <find>run()</find>
       <find>cachedFileList</find>
       <find>setText</find>
+      <find>getFileContent</find>
       <find>gui</find>
       <find>btnClear</find>
-      <find>getFileContent</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -196,11 +193,11 @@
         <option value="$PROJECT_DIR$/serverFiles/2.txt" />
         <option value="$PROJECT_DIR$/src/Server/Server.java" />
         <option value="$PROJECT_DIR$/src/Cache/CacheGUI.form" />
-        <option value="$PROJECT_DIR$/src/Cache/Cache.java" />
-        <option value="$PROJECT_DIR$/src/Cache/CacheGUI.java" />
         <option value="$PROJECT_DIR$/src/Client/ClientGUI.form" />
         <option value="$PROJECT_DIR$/src/Client/Client.java" />
         <option value="$PROJECT_DIR$/src/Client/ClientGUI.java" />
+        <option value="$PROJECT_DIR$/src/Cache/CacheGUI.java" />
+        <option value="$PROJECT_DIR$/src/Cache/Cache.java" />
       </list>
     </option>
   </component>
@@ -270,7 +267,7 @@
     <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1538383382771" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1538387304609" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="/usr/local/bin/node" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -396,7 +393,7 @@
       <workItem from="1538047635641" duration="26241000" />
       <workItem from="1538133130064" duration="7138000" />
       <workItem from="1538187018760" duration="9128000" />
-      <workItem from="1538263444151" duration="29214000" />
+      <workItem from="1538263444151" duration="31264000" />
     </task>
     <task id="LOCAL-00001" summary="Server: loadFile()">
       <created>1537591439024</created>
@@ -552,11 +549,18 @@
       <option name="project" value="LOCAL" />
       <updated>1538367734070</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="ClientGUI &amp; CacheGUI: clear() works. (Part 1 &amp; 2)">
+      <created>1538383453254</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1538383453254</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="114982000" />
+    <option name="totallyTimeSpent" value="117032000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -651,7 +655,8 @@
     <MESSAGE value="ClientGUI: finish showContent button" />
     <MESSAGE value="ClientGUI &amp; CacheGUI: sendFile() works. (Part 1)" />
     <MESSAGE value="ClientGUI &amp; CacheGUI: transferFile() works. (Part 2)" />
-    <option name="LAST_COMMIT_MESSAGE" value="ClientGUI &amp; CacheGUI: transferFile() works. (Part 2)" />
+    <MESSAGE value="ClientGUI &amp; CacheGUI: clear() works. (Part 1 &amp; 2)" />
+    <option name="LAST_COMMIT_MESSAGE" value="ClientGUI &amp; CacheGUI: clear() works. (Part 1 &amp; 2)" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/WebCache.iml">
@@ -730,46 +735,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Server/Server.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="22" column="61" selection-start-line="22" selection-start-column="61" selection-end-line="22" selection-end-column="61" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#runServer#0;class#Server#0" />
-            <element signature="class#FileFragmenter#0;class#Server#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Cache/CacheGUI.form">
       <provider selected="true" editor-type-id="ui-designer" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Cache/Cache.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="52">
-          <caret line="325" column="28" lean-forward="true" selection-start-line="325" selection-start-column="16" selection-end-line="325" selection-end-column="28" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#requestFilePartFromServer#0;class#Task#0;class#Cache#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Client/ClientGUI.form">
       <provider selected="true" editor-type-id="ui-designer" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Cache/CacheGUI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="52" column="36" lean-forward="true" selection-start-line="49" selection-start-column="16" selection-end-line="52" selection-end-column="36" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1182#1357#0" expanded="true" />
-            <element signature="e#1356#1357#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -787,8 +757,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Client/ClientGUI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="114" column="62" lean-forward="true" selection-start-line="114" selection-start-column="62" selection-end-line="114" selection-end-column="62" />
+        <state relative-caret-position="496">
+          <caret line="31" column="25" lean-forward="true" selection-start-line="31" selection-start-column="25" selection-end-line="31" selection-end-column="25" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#822#1924#0" expanded="true" />
@@ -797,6 +767,42 @@
             <element signature="e#2915#2916#0" expanded="true" />
             <element signature="e#3782#3974#0" expanded="true" />
             <element signature="e#3973#3974#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Server/Server.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-655">
+          <caret line="22" column="61" selection-start-line="22" selection-start-column="61" selection-end-line="22" selection-end-column="61" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#runServer#0;class#Server#0" />
+            <element signature="class#FileFragmenter#0;class#Server#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Cache/CacheGUI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="318">
+          <caret line="93" column="30" lean-forward="true" selection-start-line="93" selection-start-column="30" selection-end-line="93" selection-end-column="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1182#1357#0" expanded="true" />
+            <element signature="e#1356#1357#0" expanded="true" />
+            <element signature="e#2408#2409#0" expanded="true" />
+            <element signature="e#2445#2446#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Cache/Cache.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="201" column="42" lean-forward="true" selection-start-line="201" selection-start-column="42" selection-end-line="201" selection-end-column="42" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

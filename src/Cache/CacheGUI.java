@@ -85,10 +85,14 @@ public class CacheGUI extends JFrame{
             }
         });
          ***/
-        System.out.println("触发了");
         cachedFileList.setListData(items);
 
     }
+
+
+    public void setLogText(String text) {
+        logText.setText(text);
+    };
 
 
 

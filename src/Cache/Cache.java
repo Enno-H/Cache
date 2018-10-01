@@ -139,11 +139,13 @@ public class Cache extends Thread{
 
         private void sendFiles(String fileName) throws UnknownHostException, IOException{
             log.info("client requests transfer file:"+fileName);
+            boolean cached = true;
 
             try {
                 //如果没有缓存过
                 if(!cachedFilesMap.containsKey(fileName)){
                     System.out.println("没有缓存过");
+                    cached = false;
 
                     Socket cacheSocket = new Socket("localhost",SERVER_PORT);
                     dos_toServer = new DataOutputStream(cacheSocket.getOutputStream());
@@ -196,6 +198,8 @@ public class Cache extends Thread{
                 }
                 //上一阶段（接收）：        data-》file
                 //下一阶段（发送给Client）  file-》data
+
+                writeLog(fileName,cached);
 
                 try {
                     File file = cachedFilesMap.get(fileName);
@@ -275,7 +279,9 @@ public class Cache extends Thread{
                     dos_toClient.flush();
                 }
 
-
+                bis.close();
+                dis.close();
+                writeLog(fileName, totalSize, cachedSize);
 
 
             } catch (IOException e){
@@ -346,6 +352,15 @@ public class Cache extends Thread{
         return null;
     }
 
+
+    public CacheGUI getGui() {
+        return gui;
+    }
+
+    public void setGui(CacheGUI gui) {
+        this.gui = gui;
+    }
+
     private void writeLog(String fileName, boolean cached) {
         Date date = new Date();
         DateFormat df = new SimpleDateFormat("HH:mm:ss yyyy-MM-dd");
@@ -354,8 +369,8 @@ public class Cache extends Thread{
             cacheLog += "response: cached file " + fileName + "\n";
         } else {
             cacheLog += "response: file " + fileName + " downloaded from the server" + "\n";
-
         }
+        gui.setLogText(cacheLog);
     }
 
     private void writeLog(String fileName, int totalSize, int cachedSize) {
@@ -365,17 +380,7 @@ public class Cache extends Thread{
         String percentage = ((double) cachedSize / totalSize * 100 + "");
         percentage = percentage.substring(0, percentage.indexOf('.'));
         cacheLog += "response: " + percentage +"% of file " + fileName + " was constructed with the cached data\n";
-    }
-
-
-
-
-    public CacheGUI getGui() {
-        return gui;
-    }
-
-    public void setGui(CacheGUI gui) {
-        this.gui = gui;
+        gui.setLogText(cacheLog);
     }
 
 
