@@ -27,33 +27,12 @@ public class ClientGUI extends JFrame {
     public ClientGUI(){
 
 
-
         this.client = new Client();
-
-
 
         add(rootPanel);
         setTitle("CLIENT");
         setSize(800,500);
-
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-        /***
-        btnDownload.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(rootPanel,"HAHAHA");
-            }
-        });
-         ***/
-
-
-
-
-
-
-
-
 
 
         btnRefresh.addMouseListener(new MouseAdapter() {
@@ -127,16 +106,6 @@ public class ClientGUI extends JFrame {
             }
         });
 
-
-
-
-
-
-
-
-
-
-
     }
 
 
@@ -152,6 +121,5 @@ public class ClientGUI extends JFrame {
                 clientGUI.setVisible(true);
             }
         });
-
     }
 }

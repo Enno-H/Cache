@@ -23,7 +23,6 @@ public class Client {
 
 
     private List<String> serverFileList;
-    private String selectedFileName;
     private List<String> downloadedFileList;
 
     public static void main(String[] args) {

@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 import FileFragments.FileFragments;
 
 
-public class Cache {
+public class Cache extends Thread{
 
     private Logger log = Logger.getLogger(Cache.class.getName());
 
@@ -27,7 +27,15 @@ public class Cache {
 
     private String cacheLog = new String();
 
+    private CacheGUI gui;
 
+
+    @Override
+    public void run(){
+        this.load();
+        this.deleteFiles();
+        this.runCache();
+    }
 
     public static void main(String[] args) {
         Cache cache = new Cache();
@@ -36,11 +44,13 @@ public class Cache {
         cache.runCache();
     }
 
+
+
     private void load(){
         cachedFileList = new HashMap<>();
     }
 
-    private void runCache(){
+    public void runCache(){
         try {
             ServerSocket cacheSocket = new ServerSocket(CACHE_PORT);
             System.out.println("启动缓存器，端口："+ CACHE_PORT + "...");
@@ -88,8 +98,8 @@ public class Cache {
                     listFiles();
 
                 } else {
-                    //sendFiles(commandFromClient);
-                    transferFile(commandFromClient);
+                    sendFiles(commandFromClient);
+                    //transferFile(commandFromClient);
                 }
 
             } catch (IOException e) {
@@ -172,6 +182,8 @@ public class Cache {
 
                         System.out.println("*****"+file.length());
                         cachedFileList.put(fileName, file);
+
+                        gui.setCachedFiles((String[]) cachedFileList.keySet().toArray(new String[0]));
 
 
                     } catch (IOException e){
@@ -262,6 +274,10 @@ public class Cache {
                     dos_toClient.write(tempByteArray, 0, read);
                     dos_toClient.flush();
                 }
+
+
+
+
             } catch (IOException e){
                 e.printStackTrace();
             } finally {
@@ -299,7 +315,7 @@ public class Cache {
     }
 
 
-    private void deleteFiles(){
+    public void deleteFiles(){
         File directory = new File("cacheFiles");
         File[] listOfFiles = directory.listFiles();
         for (File file : listOfFiles) {
@@ -322,7 +338,6 @@ public class Cache {
         cacheLog += "user request: file " + fileName + " at " + df.format(date) + "\n";
         if (cached) {
             cacheLog += "response: cached file " + fileName + "\n";
-            ;
         } else {
             cacheLog += "response: file " + fileName + " downloaded from the server" + "\n";
 
@@ -336,6 +351,15 @@ public class Cache {
         String percentage = ((double) cachedSize / totalSize * 100 + "");
         percentage = percentage.substring(0, percentage.indexOf('.'));
         cacheLog += "response: " + percentage +"% of file " + fileName + " was constructed with the cached data\n";
+    }
+
+
+    public CacheGUI getGui() {
+        return gui;
+    }
+
+    public void setGui(CacheGUI gui) {
+        this.gui = gui;
     }
 
 

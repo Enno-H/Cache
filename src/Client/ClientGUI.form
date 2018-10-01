@@ -1,80 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="Client.ClientGUI">
-  <grid id="27dc6" binding="rootPanel" layout-manager="GridLayoutManager" row-count="4" column-count="7" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-    <margin top="0" left="0" bottom="0" right="0"/>
+  <grid id="27dc6" binding="rootPanel" layout-manager="GridLayoutManager" row-count="4" column-count="3" same-size-horizontally="true" same-size-vertically="false" hgap="10" vgap="10">
+    <margin top="20" left="20" bottom="20" right="20"/>
     <constraints>
-      <xy x="20" y="20" width="420" height="400"/>
+      <xy x="20" y="20" width="640" height="400"/>
     </constraints>
     <properties/>
-    <border type="none"/>
+    <border type="none" title=""/>
     <children>
-      <component id="df7c" class="javax.swing.JLabel">
+      <scrollpane id="6c640">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="This is my new GUI form!!"/>
-        </properties>
-      </component>
-      <component id="8ffe4" class="javax.swing.JButton" binding="btnRefresh">
-        <constraints>
-          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="99" height="30"/>
-          </grid>
-        </constraints>
-        <properties>
-          <text value="list"/>
-        </properties>
-      </component>
-      <scrollpane id="a00b4">
-        <constraints>
-          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties/>
-        <border type="none"/>
-        <children>
-          <component id="d3639" class="javax.swing.JList" binding="serverFileList">
-            <constraints/>
-            <properties/>
-          </component>
-        </children>
-      </scrollpane>
-      <scrollpane id="4e1b1">
-        <constraints>
-          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
-            <preferred-size width="99" height="128"/>
-          </grid>
-        </constraints>
-        <properties/>
-        <border type="none"/>
-        <children>
-          <component id="33d0a" class="javax.swing.JList" binding="downloadedFileList">
-            <constraints/>
-            <properties/>
-          </component>
-        </children>
-      </scrollpane>
-      <component id="44f8a" class="javax.swing.JButton" binding="btnContent">
-        <constraints>
-          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="99" height="30"/>
-          </grid>
-        </constraints>
-        <properties>
-          <text value="Content"/>
-        </properties>
-      </component>
-      <component id="263c0" class="javax.swing.JButton" binding="btnDownload">
-        <constraints>
-          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Download"/>
-        </properties>
-      </component>
-      <scrollpane id="420f6">
-        <constraints>
-          <grid row="2" column="2" row-span="1" col-span="5" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
         <border type="none"/>
@@ -85,31 +21,88 @@
           </component>
         </children>
       </scrollpane>
-      <hspacer id="a35d7">
+      <scrollpane id="4645b">
         <constraints>
-          <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-      </hspacer>
-      <hspacer id="fede7">
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="33d0a" class="javax.swing.JList" binding="downloadedFileList">
+            <constraints/>
+            <properties>
+              <layoutOrientation value="1"/>
+            </properties>
+          </component>
+        </children>
+      </scrollpane>
+      <scrollpane id="f4">
         <constraints>
-          <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-      </hspacer>
-      <hspacer id="ca99f">
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="d3639" class="javax.swing.JList" binding="serverFileList">
+            <constraints/>
+            <properties>
+              <layoutOrientation value="1"/>
+            </properties>
+          </component>
+        </children>
+      </scrollpane>
+      <component id="8ffe4" class="javax.swing.JButton" binding="btnRefresh">
         <constraints>
-          <grid row="1" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="99" height="30"/>
+          </grid>
         </constraints>
-      </hspacer>
-      <hspacer id="1891d">
+        <properties>
+          <text value="Mode 1"/>
+        </properties>
+      </component>
+      <component id="263c0" class="javax.swing.JButton" binding="btnDownload">
         <constraints>
-          <grid row="1" column="5" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
-      </hspacer>
-      <hspacer id="2fccb">
+        <properties>
+          <text value="Download"/>
+        </properties>
+      </component>
+      <component id="44f8a" class="javax.swing.JButton" binding="btnContent">
         <constraints>
-          <grid row="1" column="6" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="99" height="30"/>
+          </grid>
         </constraints>
-      </hspacer>
+        <properties>
+          <text value="Content"/>
+        </properties>
+      </component>
+      <component id="5a050" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="7" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Files on Server"/>
+        </properties>
+      </component>
+      <component id="31530" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Download Files"/>
+        </properties>
+      </component>
+      <component id="9c387" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Content"/>
+        </properties>
+      </component>
     </children>
   </grid>
 </form>
