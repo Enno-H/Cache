@@ -347,7 +347,16 @@ public class Cache extends Thread{
     public String getFilePartString(String string) {
         if(digestToPartsMap.containsKey(string)){
             byte[] filePart = digestToPartsMap.get(string);
-            return new String(filePart);
+
+            StringBuffer sb = new StringBuffer();
+            for(int i = 0; i < filePart.length; i++) {
+                String hex = Integer.toHexString(filePart[i] & 0xFF);
+                if(hex.length() < 2){
+                    sb.append(0);
+                }
+                sb.append(hex);
+            }
+            return sb.toString();
         }
         return null;
     }
