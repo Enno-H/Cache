@@ -35,7 +35,6 @@ public class CacheGUI extends JFrame{
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if(cachedFileList.getSelectedIndex() != -1){
-                    btnContent.setEnabled(true);
                     fileContent.setText(cache.getFilePartString((String)cachedFileList.getSelectedValue()));
                 }
             }
