@@ -17,7 +17,6 @@ import java.util.logging.Logger;
 public class Server {
 
     private static final int SERVER_PORT = 8080;
-    private static final int CACHE_PORT = 8081;
 
     private Logger log = Logger.getLogger(Server.class.getName());
     private FileFragmenter fragmenter = new FileFragmenter();
@@ -25,8 +24,6 @@ public class Server {
     private HashMap<String, File> filesMap = new HashMap<>();
     private HashMap<String, FileFragments> fileFragmentsMap = new HashMap<>();
     private Map<String, byte[]> digestToPartsMap = new HashMap<>();
-
-
 
 
     public static void main(String[] args) {
@@ -39,12 +36,12 @@ public class Server {
     private void runServer(){
         try {
             ServerSocket serverSocket = new ServerSocket(SERVER_PORT);
-            System.out.println("启动服务器，端口："+ SERVER_PORT + "...");
+            System.out.println("Start the server，port："+ SERVER_PORT + "...");
 
 
             while (true){
                 Socket socket = serverSocket.accept();
-                System.out.println("客户端:"+socket.getInetAddress().getLocalHost()+"已连接到服务器");
+                System.out.println("The cache :"+socket.getInetAddress().getLocalHost()+" is connected to this server.");
                 new Thread(new Task(socket)).start();
             }
         } catch (IOException e) {
@@ -193,14 +190,12 @@ public class Server {
         try {
             md = MessageDigest.getInstance("MD5");
             File folder = new File("serverFiles");
-            log.info(folder.getAbsolutePath());
             File[] listOfFiles = folder.listFiles();
             if (listOfFiles == null) {
-
                 log.info("wrong directory, no files loaded");
             }
             for (File file : listOfFiles) {
-                log.info(file.getName());
+                //log.info(file.getName());
                 filesMap.put(file.getName(), file);
                 List<byte[]> fragmentList = fragmenter.fragment(file.getAbsolutePath());
                 FileFragments fileFragments = new FileFragments();
@@ -211,13 +206,12 @@ public class Server {
                     String base64Digest = new String(encoded);
                     digestToPartsMap.put(base64Digest, filePart);
                     fileFragments.getFragmentDigestList().add(base64Digest);
-                    log.info("digestToPartsMap map size : " +digestToPartsMap.size());
+                    //log.info("digestToPartsMap map size : " +digestToPartsMap.size());
                 }
                 fileFragmentsMap.put(file.getName(), fileFragments);
             }
 
-            log.info("digestToPartsMap map size : " +digestToPartsMap.size() +"");
-            System.out.println("fileFragmentsMap size: "+fileFragmentsMap.size());
+            //log.info("digestToPartsMap map size : " +digestToPartsMap.size() +"");
         } catch (NoSuchAlgorithmException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -228,7 +222,6 @@ public class Server {
     class FileFragmenter{
 
         private  Logger log = Logger.getLogger(FileFragmenter.class.getName());
-        //private Integer prime = 10000169;
         private Integer prime = 1009;
         private Integer windowSize = 48;
         private Integer hashFactor = 256;
@@ -250,7 +243,7 @@ public class Server {
                 int lastBoundaryIndex = 0;
                 Queue<Integer> window = new LinkedList<Integer>();
 
-                log.info("total bytes : " + data.length);
+                //log.info("total bytes : " + data.length);
                 for (int i = 0; i < windowSize; i++) {
                     int value = data[i];
                     window.add(value);
@@ -265,11 +258,9 @@ public class Server {
                     rollingHash = (rollingHash  + prime -  (firstValueInWindow) * (eliminationMultiplier ) % prime) % prime ;
                     rollingHash = (rollingHash * hashFactor + nextValue ) % prime;
                     if (rollingHash == boundary){
-                        //log.info("boundary found " + j);
                         if( j - lastBoundaryIndex >= 2048){
                             resultList.add(Arrays.copyOfRange(data,lastBoundaryIndex, j));
                             lastBoundaryIndex = j;
-
                             count ++;
                         }
 
@@ -277,15 +268,13 @@ public class Server {
 
                 }
                 resultList.add(Arrays.copyOfRange(data,lastBoundaryIndex, data.length));
-                log.info("average chunk size " + (data.length / count));
+                //log.info("average chunk size " + (data.length / count));
 
             } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }catch(Exception e){
                 e.printStackTrace();
             }
-            log.info(resultList.size()+"");
             return resultList;
 
         }

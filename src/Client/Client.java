@@ -39,7 +39,6 @@ public class Client {
 
             //client.requestFile("2.pdf");
 
-            System.out.println(client.getFileContent("1.txt"));
 
 
         } catch (UnknownHostException e) {
@@ -115,7 +114,6 @@ public class Client {
 
 
             // 开始接收文件
-            System.out.println("======== 开始接收文件 ========");
             byte[] bytes = new byte[8132];
             int length = 0;
             long progress = 0;
@@ -125,8 +123,6 @@ public class Client {
                 progress += length;
                 //System.out.print("| " + (100*progress/fileLength) + "% |");
             }
-            System.out.println();
-            System.out.println("======== 文件传输成功 ========");
 
             if (!downloadedFileList.contains(fileName)) {
                 downloadedFileList.add(fileName);
@@ -176,7 +172,21 @@ public class Client {
         byte[] encoded;
         try {
             encoded = Files.readAllBytes(Paths.get("clientFiles",fileName));
-            return new String(encoded, StandardCharsets.UTF_8);
+
+            StringBuffer sb = new StringBuffer();
+            for(int i = 0; i < encoded.length; i++) {
+                String hex = Integer.toHexString(encoded[i] & 0xFF);
+                if(hex.length() < 2){
+                    sb.append(0);
+                }
+                sb.append(hex);
+            }
+
+
+            String output = new String(encoded, StandardCharsets.UTF_8);
+            //System.out.println(output);
+
+            return sb.toString();
         } catch (IOException e) {
             e.printStackTrace();
 
