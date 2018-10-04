@@ -37,7 +37,7 @@ public class CacheGUI extends JFrame {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (cachedFileList.getSelectedIndex() != -1) {
-                    fileContent.setText(cache.getFilePartString((String) cachedFileList.getSelectedValue()));
+                    fileContent.setText(cache.getFileContent((String) cachedFileList.getSelectedValue()));
                 }
             }
         });
@@ -105,7 +105,7 @@ public class CacheGUI extends JFrame {
         logText = new JTextArea();
         scrollPane2.setViewportView(logText);
         final JLabel label1 = new JLabel();
-        label1.setText("Cached Data Fragments");
+        label1.setText("Cached Files");
         rootPanel.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label2 = new JLabel();
         label2.setText("Log");
@@ -118,7 +118,7 @@ public class CacheGUI extends JFrame {
         fileContent = new JTextArea();
         scrollPane3.setViewportView(fileContent);
         final JLabel label3 = new JLabel();
-        label3.setText("Content");
+        label3.setText("Content (hexadecimal numbers)");
         rootPanel.add(label3, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 

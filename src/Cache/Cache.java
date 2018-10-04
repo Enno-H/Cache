@@ -3,6 +3,9 @@ package Cache;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.rmi.UnknownHostException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -96,8 +99,8 @@ public class Cache extends Thread{
                     listFiles();
 
                 } else {
-                    //sendFiles(commandFromClient);
-                    transferFile(commandFromClient);
+                    sendFiles(commandFromClient);
+                    //transferFile(commandFromClient);
                 }
 
             } catch (IOException e) {
@@ -143,7 +146,6 @@ public class Cache extends Thread{
             try {
                 //如果没有缓存过
                 if(!cachedFilesMap.containsKey(fileName)){
-                    System.out.println("没有缓存过");
                     cached = false;
 
                     Socket cacheSocket = new Socket("localhost",SERVER_PORT);
@@ -163,17 +165,13 @@ public class Cache extends Thread{
                     try {
                         dos_toServer.writeUTF(fileName);
                         dos_toServer.flush();
-                        long fileLength = dis_fromServer.readLong();
 
                         //开始接收文件
                         byte[] bytes = new byte[5000];
                         int length = 0;
-                        long progress = 0;
                         while((length = dis_fromServer.read(bytes, 0, bytes.length)) != -1) {
                             fos.write(bytes, 0, length);
                             fos.flush();
-                            progress += length;
-                            System.out.print("| " + (100*progress/fileLength) + "% |");
                         }
 
                         cachedFilesMap.put(fileName, file);
@@ -350,6 +348,26 @@ public class Cache extends Thread{
         return null;
     }
 
+    public String getFileContent(String fileName) {
+        byte[] encoded;
+        try {
+            encoded = Files.readAllBytes(Paths.get("cacheFiles",fileName));
+
+            StringBuffer sb = new StringBuffer();
+            for(int i = 0; i < encoded.length; i++) {
+                String hex = Integer.toHexString(encoded[i] & 0xFF);
+                if(hex.length() < 2){
+                    sb.append(0);
+                }
+                sb.append(hex);
+            }
+            return sb.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     public CacheGUI getGui() {
         return gui;
@@ -362,7 +380,7 @@ public class Cache extends Thread{
     private void writeLog(String fileName, boolean cached) {
         Date date = new Date();
         DateFormat df = new SimpleDateFormat("HH:mm:ss yyyy-MM-dd");
-        cacheLog += "user request: file " + fileName + " at " + df.format(date) + "\n\n";
+        cacheLog += "user request: file " + fileName + " at " + df.format(date) + "\n";
         if (cached) {
             cacheLog += "response: cached file " + fileName + "\n";
         } else {

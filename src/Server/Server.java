@@ -81,8 +81,8 @@ public class Server {
                     listFile(os);
 
                 } else {
-                    //sendFile(os, commandFromClient);
-                    transferFile(os,commandFromClient);
+                    sendFile(os, commandFromClient);
+                    //transferFile(os,commandFromClient);
                 }
 
             } catch (SocketTimeoutException s) {
@@ -112,10 +112,10 @@ public class Server {
                     DataOutputStream dos = new DataOutputStream(outputStream);
 
                     // 文件名和长度
-                    dos.writeUTF(file.getName());
-                    dos.flush();
-                    dos.writeLong(file.length());
-                    dos.flush();
+                    //dos.writeUTF(file.getName());
+                    //dos.flush();
+                    //dos.writeLong(file.length());
+                    //dos.flush();
 
                     // 开始传输文件
                     System.out.println("======== 开始传输文件 ========");
