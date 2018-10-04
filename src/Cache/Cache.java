@@ -51,11 +51,11 @@ public class Cache extends Thread{
     public void runCache(){
         try {
             ServerSocket cacheSocket = new ServerSocket(CACHE_PORT);
-            System.out.println("启动缓存器，端口："+ CACHE_PORT + "...");
+            System.out.println("Start the cache，port："+ CACHE_PORT + "...");
 
             while (true){
                 Socket socket = cacheSocket.accept();
-                System.out.println("客户端:"+socket.getInetAddress().getLocalHost()+"已连接到服务器");
+                System.out.println("The client: "+socket.getInetAddress().getLocalHost()+" is connected to this cache.");
                 new Thread(new Task(socket)).start();
             }
 
@@ -119,7 +119,6 @@ public class Cache extends Thread{
 
                 Set<String> files = (Set<String>) ois_fromServer.readObject();
                 fileFragmentsMap = (Map<String, FileFragments>) ois_fromServer.readObject();
-                System.out.println("&&&&"+fileFragmentsMap.size());
                 for (String fileName : files) {
                     log.info(fileName);
                 }
@@ -167,7 +166,6 @@ public class Cache extends Thread{
                         long fileLength = dis_fromServer.readLong();
 
                         //开始接收文件
-                        System.out.println("======== 开始接收文件 ========");
                         byte[] bytes = new byte[5000];
                         int length = 0;
                         long progress = 0;
@@ -177,10 +175,7 @@ public class Cache extends Thread{
                             progress += length;
                             System.out.print("| " + (100*progress/fileLength) + "% |");
                         }
-                        System.out.println();
-                        System.out.println("======== 文件接收成功 ========");
 
-                        System.out.println("*****"+file.length());
                         cachedFilesMap.put(fileName, file);
 
                         gui.setCachedFiles((String[]) cachedFilesMap.keySet().toArray(new String[0]));
@@ -210,7 +205,6 @@ public class Cache extends Thread{
                     //dos_toClient.flush();
 
                     // 开始传输文件
-                    System.out.println("======== 开始向Client传输缓存文件 ========");
                     byte[] bytes = new byte[5000];
                     int length = 0;
                     long progress = 0;
@@ -219,8 +213,6 @@ public class Cache extends Thread{
                         dos_toClient.flush();
                         progress += length;
                         System.out.print("| " + (100*progress/file.length()) + "% |");
-                        System.out.println();
-                        System.out.println("======== 缓存文件传输成功 ========");
                     }
                 } catch (IOException e){
                     e.printStackTrace();
@@ -245,14 +237,12 @@ public class Cache extends Thread{
                 for (String digest: fragments.getFragmentDigestList()){
                     if(digestToPartsMap.containsKey(digest)){
                         //TODO 有缓存
-                        System.out.println("有Cache");
                         byte[] filePart = digestToPartsMap.get(digest);
                         totalSize = totalSize + filePart.length;
                         cachedSize = cachedSize + filePart.length;
                         bos.write(filePart);
                     } else{
                         //TODO 从Server读取
-                        System.out.println("没cache");
                         byte[] filePart = requestFilePartFromServer(digest);
                         totalSize = totalSize + filePart.length;
                         bos.write(filePart);
@@ -262,7 +252,6 @@ public class Cache extends Thread{
 
             }
 
-            System.out.println("读完毕");
             System.out.println("total size: "+ totalSize+" ;cached size: "+cachedSize);
 
             try {

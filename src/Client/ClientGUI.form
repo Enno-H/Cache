@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="rootPanel" layout-manager="GridLayoutManager" row-count="4" column-count="3" same-size-horizontally="true" same-size-vertically="false" hgap="10" vgap="10">
     <margin top="20" left="20" bottom="20" right="20"/>
     <constraints>
-      <xy x="20" y="20" width="640" height="400"/>
+      <xy x="20" y="20" width="698" height="400"/>
     </constraints>
     <properties/>
     <border type="none" title=""/>
@@ -15,7 +15,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="84705" class="javax.swing.JTextField" binding="fileContent">
+          <component id="a1c9c" class="javax.swing.JTextArea" binding="fileContent">
             <constraints/>
             <properties/>
           </component>
@@ -58,7 +58,7 @@
           </grid>
         </constraints>
         <properties>
-          <text value="Mode 1"/>
+          <text value="Request File List from Server"/>
         </properties>
       </component>
       <component id="263c0" class="javax.swing.JButton" binding="btnDownload">
@@ -90,7 +90,7 @@
           <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Content"/>
+          <text value="Content (Hexadecimal Digits)"/>
         </properties>
       </component>
       <component id="44f8a" class="javax.swing.JButton" binding="btnClear">
